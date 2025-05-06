@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Sign Up - Sportify</title>
+        <title>Sign Up - GastroBase</title>
     </head>
     <body>
         <div class="container">
