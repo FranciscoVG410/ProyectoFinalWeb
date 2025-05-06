@@ -14,7 +14,6 @@
     <body>
         <div  class="contenedor01">
             <section  class="titulo">
-                <img src="./img/sportify-logo.png" alt="">
                 <p>Welcome back!</p>
                 <h1>Log in</h1>
             </section>
