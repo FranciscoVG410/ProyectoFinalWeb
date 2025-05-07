@@ -16,7 +16,7 @@ public class GastroBaseDAO {
 
     public static void main(String[] args) {
         try {
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory("");
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("GastroBase");
             EntityManager em = emf.createEntityManager();
             System.out.println("Database generated successfully!");
             em.close();
