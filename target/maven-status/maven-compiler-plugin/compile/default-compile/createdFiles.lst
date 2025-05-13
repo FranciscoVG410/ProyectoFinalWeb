@@ -1,0 +1,13 @@
+proyefinalWEB\gastrobase\resources\JakartaEE8Resource.class
+proyefinalWEB\gastrobase\controller\GuardarRecetaServlet.class
+proyefinalWEB\gastrobase\model\Receta.class
+proyefinalWEB\gastrobase\controller\RegistroServlet.class
+proyefinalWEB\gastrobase\controller\EditarRecetaServlet.class
+proyefinalWEB\gastrobase\JakartaRestConfiguration.class
+proyefinalWEB\gastrobase\controller\CalificarRecetaServlet.class
+proyefinalWEB\gastrobase\model\ControlUsuario.class
+proyefinalWEB\gastrobase\controller\LogoutServlet.class
+proyefinalWEB\gastrobase\controller\EliminarRecetaServlet.class
+proyefinalWEB\gastrobase\controller\VerRecetaServlet.class
+proyefinalWEB\gastrobase\model\ControlReceta.class
+proyefinalWEB\gastrobase\model\Usuario.class
