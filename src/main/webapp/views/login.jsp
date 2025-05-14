@@ -57,7 +57,7 @@
                         <h1 class="animate__animated animate__fadeIn">Acceso Chef<span class="blinking">_</span></h1>
                     </div>
 
-                    <form class="culinary-login animate__animated animate__fadeIn animate__delay-1s" action="${pageContext.request.contextPath}/login" method="POST">
+                    <form class="culinary-login animate__animated animate__fadeIn animate__delay-1s" action="${pageContext.request.contextPath}/views/Home.jsp" method="POST">
                         <div class="input-group sizzle-input">
                             <input type="email" id="email" name="email"  required placeholder=" ">
                             <label for="email"><i class="fas fa-envelope"></i> Email Culinario</label>
