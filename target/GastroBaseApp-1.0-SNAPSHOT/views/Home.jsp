@@ -1,7 +1,7 @@
 <%-- 
     Document   : home
     Created on : 3 may 2025, 09:00:00 a.m.
-    Author     : GASTROBASE
+    Author     : carlos
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -217,136 +217,7 @@
                 <i class="fas fa-plus"></i>
             </button>
         </div>
-
-        <script>
-            // ----- Control del modal -----
-            function openRecipeModal() {
-                document.getElementById('recipeModal').style.display = 'flex';
-            }
-
-            function closeRecipeModal() {
-                document.getElementById('recipeModal').style.display = 'none';
-                // Limpiar el formulario al cerrar
-                document.getElementById('recipeForm').reset();
-                document.getElementById('previewContainer').innerHTML = '';
-                document.querySelector('.upload-content span').textContent = 'Haz clic o arrastra hasta 5 fotos';
-            }
-
-            // ----- Toggle menú perfil -----
-            function toggleProfileMenu() {
-                document.querySelector('.profile-menu').classList.toggle('show');
-            }
-
-            // Cerrar menú al hacer click fuera
-            window.addEventListener('click', function (e) {
-                if (!e.target.closest('.user-profile')) {
-                    document.querySelector('.profile-menu').classList.remove('show');
-                }
-            });
-
-
-            // ----- Subida y previsualizado de fotos -----
-            const photoUpload = document.getElementById('photoUpload');
-            const previewContainer = document.getElementById('previewContainer');
-            const fileUploadContainer = document.getElementById('fileUploadContainer');
-
-            // Dispara el input file al hacer click en el área
-            fileUploadContainer.addEventListener('click', (e) => {
-                if (e.target.closest('.upload-content') || e.target === fileUploadContainer) {
-                    photoUpload.click();
-                }
-            });
-
-            // Drag & drop
-            fileUploadContainer.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                fileUploadContainer.classList.add('dragover');
-            });
-            fileUploadContainer.addEventListener('dragleave', () => {
-                fileUploadContainer.classList.remove('dragover');
-            });
-            fileUploadContainer.addEventListener('drop', (e) => {
-                e.preventDefault();
-                fileUploadContainer.classList.remove('dragover');
-                photoUpload.files = e.dataTransfer.files;
-                photoUpload.dispatchEvent(new Event('change'));
-            });
-
-            photoUpload.addEventListener('change', function (evt) {
-                const files = Array.from(evt.target.files);
-
-                // VALIDACIÓN: máximo 5 archivos
-                if (files.length > 5) {
-                    alert('Solo puedes subir un máximo de 5 fotos.');
-                    photoUpload.value = '';
-                    previewContainer.innerHTML = '';
-                    fileUploadContainer.querySelector('.upload-content span')
-                            .textContent = 'Haz clic o arrastra hasta 5 fotos';
-                    return;
-                }
-
-                // Limpiar previos y actualizar contador
-                previewContainer.innerHTML = '';
-                const span = fileUploadContainer.querySelector('.upload-content span');
-                span.textContent = files.length
-                        ? `${files.length} foto(s) seleccionada(s)`
-                        : 'Haz clic o arrastra hasta 5 fotos';
-
-                // Generar previews
-                files.forEach((file, index) => {
-                    const reader = new FileReader();
-
-                    reader.onload = function (loadEvent) {
-                        console.log('DATA URL:', loadEvent.target.result);
-
-                        const previewItem = document.createElement('div');
-                        previewItem.className = 'preview-item';
-
-                        const img = document.createElement('img');
-                        img.src = loadEvent.target.result;
-                        img.alt = 'Preview';
-                        previewItem.appendChild(img);
-
-                        const btn = document.createElement('button');
-                        btn.className = 'remove-btn';
-                        btn.innerHTML = '&times;';
-                        btn.onclick = () => removePreview(index);
-                        previewItem.appendChild(btn);
-
-                        previewContainer.appendChild(previewItem);
-                    };
-
-                    reader.onerror = function (err) {
-                        console.error('Error leyendo el archivo', err);
-                    };
-
-                    reader.readAsDataURL(file);
-                });
-            });
-
-            // Función para eliminar una preview por índice
-            function removePreview(idx) {
-                const dt = new DataTransfer();
-                const files = Array.from(photoUpload.files);
-                files.splice(idx, 1);
-                files.forEach(f => dt.items.add(f));
-                photoUpload.files = dt.files;
-                photoUpload.dispatchEvent(new Event('change'));
-            }
-
-
-            // ----- Envío del formulario -----
-            document.getElementById('recipeForm').onsubmit = function (e) {
-                e.preventDefault();
-                if (photoUpload.files.length === 0) {
-                    alert('Por favor agrega al menos una foto');
-                    return;
-                }
-                // Aquí iría la lógica real de envío (AJAX, fetch, etc.)
-                closeRecipeModal();
-                alert('¡Receta publicada con éxito!');
-            };
-        </script>
+    <script src="${pageContext.request.contextPath}/js/scriptRecetas.js"></script>
 
     </body>
 </html>

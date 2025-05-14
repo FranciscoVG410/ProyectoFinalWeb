@@ -78,7 +78,6 @@ body {
     transition: transform 0.3s ease;
 }
 
-/* Menú de usuario */
 .user-profile {
     position: relative;
     cursor: pointer;
@@ -134,7 +133,6 @@ body {
     width: 18px;
 }
 
-/* Contenido principal */
 .culinary-main {
     display: grid;
     grid-template-columns: 1fr 300px;
@@ -152,7 +150,6 @@ body {
     border-bottom: 3px solid var(--flame-orange);
 }
 
-/* Tarjetas de recetas */
 .recipe-card {
     background: white;
     border-radius: 15px;
@@ -213,7 +210,6 @@ body {
     font-size: 0.9rem;
 }
 
-/* Acciones de receta */
 .recipe-actions {
     display: flex;
     justify-content: space-around;
@@ -249,7 +245,6 @@ body {
     background: rgba(45,26,18,0.1);
 }
 
-/* Sidebar */
 .culinary-sidebar {
     position: sticky;
     top: 90px;
@@ -286,7 +281,6 @@ body {
     color: white;
 }
 
-/* Chefs destacados */
 .featured-chefs {
     margin-top: 2rem;
     background: white;
@@ -364,7 +358,6 @@ body {
     transform: scale(1.05);
 }
 
-/* Botón flotante */
 .floating-action {
     position: fixed;
     bottom: 30px;
@@ -392,7 +385,6 @@ body {
     transform: scale(1.1) rotate(90deg);
 }
 
-/* Estilos del modal */
 .new-recipe-modal {
     display: none;
     position: fixed;
@@ -444,7 +436,6 @@ body {
     gap: 10px;
 }
 
-/* Formulario de receta */
 .recipe-form {
     display: flex;
     flex-direction: column;
@@ -522,8 +513,6 @@ body {
     color: #666;
     font-size: 14px;
 }
-
-/* Acciones del formulario */
 .form-actions {
     display: flex;
     justify-content: flex-end;
@@ -611,13 +600,11 @@ body {
     font-size: 12px;
 }
 
-/* Estado de arrastrar archivos */
 .file-upload.dragover {
     border-color: var(--flame-orange);
     background: rgba(255,107,53,0.05);
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .culinary-main {
         grid-template-columns: 1fr;
