@@ -13,33 +13,27 @@ import javax.persistence.Persistence;
  * @author OMEN
  */
 public class Conexion {
-    protected static EntityManagerFactory emf;
-    
+    private static EntityManagerFactory emf;
+
     static {
         try {
-            emf = Persistence.createEntityManagerFactory("");
-            System.out.println("EntityManagerFactory created successfully");
+            emf = Persistence.createEntityManagerFactory("GastroBase");
+            System.out.println("EntityManagerFactory creado exitosamente");
         } catch (Exception e) {
-            System.err.println("Error al crear el EntityManagerFactory: " + e.getMessage());
+            System.err.println("Error al crear EntityManagerFactory");
             e.printStackTrace();
+            throw new RuntimeException("Error inicializando JPA", e);
         }
     }
-    
+
     public static EntityManager getEntityManager() {
-        if (emf == null) {
-            try {
-                emf = Persistence.createEntityManagerFactory("");
-            } catch (Exception e) {
-                throw new RuntimeException("Failed to initialize EntityManagerFactory", e);
-            }
-        }
         return emf.createEntityManager();
     }
-    
-    // Make this static
+
     public static void close() {
         if (emf != null && emf.isOpen()) {
             emf.close();
+            System.out.println("EntityManagerFactory cerrado");
         }
     }
 }

@@ -57,15 +57,23 @@
                         <h1 class="animate__animated animate__fadeIn">Acceso Chef<span class="blinking">_</span></h1>
                     </div>
 
-                    <form class="culinary-login animate__animated animate__fadeIn animate__delay-1s" action="${pageContext.request.contextPath}/views/Home.jsp" method="POST">
+                    <form class="culinary-login animate__animated animate__fadeIn animate__delay-1s" 
+                          action="${pageContext.request.contextPath}/login" method="POST">
+                        <!-- Mostrar errores si existen -->
+                        <c:if test="${not empty error}">
+                            <div class="error-message animate__animated animate__shakeX">
+                                <i class="fas fa-exclamation-circle"></i> ${error}
+                            </div>
+                        </c:if>
+
                         <div class="input-group sizzle-input">
-                            <input type="email" id="email" name="email"  required placeholder=" ">
+                            <input type="email" id="email" name="email" required placeholder=" " value="${param.email}">
                             <label for="email"><i class="fas fa-envelope"></i> Email Culinario</label>
                             <span class="input-focus-border"></span>
                         </div>
 
                         <div class="input-group sizzle-input">
-                            <input type="password" id="password" name="password"  required placeholder=" ">
+                            <input type="password" id="password" name="password" required placeholder=" ">
                             <label for="password"><i class="fas fa-lock"></i> Secreto de Cocina</label>
                             <span class="input-focus-border"></span>
                         </div>

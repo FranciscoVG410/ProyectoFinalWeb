@@ -55,15 +55,7 @@ public class Usuario implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Genero genero;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private Rol rol;
-
-    public enum Genero {
-        MASCULINO, FEMENINO, NO_ESPECIFICADO
-    }
 
     public enum Rol {
         ADMIN, NORMAL
@@ -139,14 +131,6 @@ public class Usuario implements Serializable {
 
     public void setFechaNacimiento(Calendar fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
-    }
-
-    public Genero getGenero() {
-        return genero;
-    }
-
-    public void setGenero(Genero genero) {
-        this.genero = genero;
     }
 
     public Rol getRol() {
