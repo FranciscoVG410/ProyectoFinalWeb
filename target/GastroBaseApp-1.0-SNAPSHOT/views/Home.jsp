@@ -34,8 +34,8 @@
                     <span class="user-greeting">Hola, Chef Alejandro</span>
                     <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde" alt="Perfil">
                     <div class="profile-menu">
-                        <a href="${pageContext.request.contextPath}/perfil"><i class="fas fa-user"></i> Mi Perfil</a>
-                        <a href="${pageContext.request.contextPath}/logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+                        <a href="${pageContext.request.contextPath}/views/MyProfile.jsp"><i class="fas fa-user"></i> Mi Perfil</a>
+                        <a href="${pageContext.request.contextPath}/views/login.jsp"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
                     </div>
                 </div>
             </div>
