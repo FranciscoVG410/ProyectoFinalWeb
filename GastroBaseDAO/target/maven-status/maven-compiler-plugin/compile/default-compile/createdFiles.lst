@@ -1,4 +1,6 @@
 dominio\Usuario.class
+dominio\Receta.class
+dominio\FotoReceta.class
 DAOs\UsuarioDAO.class
 main\GastroBaseDAO.class
 interfaces\IUsuarioDAO.class
