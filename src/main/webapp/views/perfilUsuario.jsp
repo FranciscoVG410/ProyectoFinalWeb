@@ -504,7 +504,11 @@
                     </article>
                 </div>
 
-                <button class="load-more">Ver más recetas</button>
+                <div class="load-more-container">
+                    <button class="load-more pulse" onclick="loadMoreRecipes()">
+                        <span class="button-text">Ver más recetas</span>
+                    </button>
+                </div>
             </section>
 
             <!-- Contenido: Recetas guardadas -->
@@ -758,6 +762,8 @@
                     }
                 });
             });
+
+          
         </script>
     </body>
 </html>
