@@ -11,45 +11,37 @@ public class Receta implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long idReceta;
 
-    @Column(name = "TITULO", nullable = false)
-    private String titulo;
+    @Column(name = "nombre", nullable = false)
+    private String nombre;
 
-    @Column(name = "TIEMPO", nullable = false)
+    @Column(name = "tiempo", nullable = false)
     private int tiempo;
 
-    @Column(name = "PERSONAS", nullable = false)
-    private int personas;
+    @Column(name = "numPersonas", nullable = false)
+    private int numPersonas;
 
-    @Column(name = "COMPLEJIDAD", nullable = false)
+    @Column(name = "complejidad", nullable = false)
     private String complejidad;
 
-    @Column(name = "INGREDIENTES", nullable = false, columnDefinition = "TEXT")
-    private String ingredientes;
-
-    @Column(name = "INSTRUCCIONES", nullable = false, columnDefinition = "TEXT")
-    private String instrucciones;
-
-    @OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<FotoReceta> fotos;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_USUARIO", nullable = false)
-    private Usuario chef;
-
+  
     public Receta() {}
 
-    public int getId() {
-        return id;
+    public Long getIdReceta() {
+        return idReceta;
     }
 
-    public String getTitulo() {
-        return titulo;
+    public void setIdReceta(Long idReceta) {
+        this.idReceta = idReceta;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public int getTiempo() {
@@ -60,12 +52,12 @@ public class Receta implements Serializable {
         this.tiempo = tiempo;
     }
 
-    public int getPersonas() {
-        return personas;
+    public int getNumPersonas() {
+        return numPersonas;
     }
 
-    public void setPersonas(int personas) {
-        this.personas = personas;
+    public void setNumPersonas(int numPersonas) {
+        this.numPersonas = numPersonas;
     }
 
     public String getComplejidad() {
@@ -76,50 +68,5 @@ public class Receta implements Serializable {
         this.complejidad = complejidad;
     }
 
-    public String getIngredientes() {
-        return ingredientes;
-    }
-
-    public void setIngredientes(String ingredientes) {
-        this.ingredientes = ingredientes;
-    }
-
-    public String getInstrucciones() {
-        return instrucciones;
-    }
-
-    public void setInstrucciones(String instrucciones) {
-        this.instrucciones = instrucciones;
-    }
-
-    public List<FotoReceta> getFotos() {
-        return fotos;
-    }
-
-    public void setFotos(List<FotoReceta> fotos) {
-        this.fotos = fotos;
-    }
-
-    public Usuario getChef() {
-        return chef;
-    }
-
-    public void setChef(Usuario chef) {
-        this.chef = chef;
-    }
-
-    /**
-     * Retorna las rutas de imagen base64 como data URI.
-     */
-    public List<String> getRutasImagenes() {
-        List<String> rutas = new ArrayList<>();
-        if (fotos != null) {
-            for (FotoReceta foto : fotos) {
-                if (foto.getImagenBase64() != null && !foto.getImagenBase64().isEmpty()) {
-                    rutas.add("data:image/jpeg;base64," + foto.getImagenBase64());
-                }
-            }
-        }
-        return rutas;
-    }
+  
 }
