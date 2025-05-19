@@ -1,7 +1,7 @@
 <%-- 
     Document   : login
     Created on : 2 may 2025, 10:16:48 p.m.
-    Author     : OMEN
+    Author     : carlos
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -57,15 +57,23 @@
                         <h1 class="animate__animated animate__fadeIn">Acceso Chef<span class="blinking">_</span></h1>
                     </div>
 
-                    <form class="culinary-login animate__animated animate__fadeIn animate__delay-1s" action="${pageContext.request.contextPath}/login" method="POST">
+                    <form class="culinary-login animate__animated animate__fadeIn animate__delay-1s" 
+                          action="${pageContext.request.contextPath}/login" method="POST">
+                        <!-- Mostrar errores si existen -->
+                        <c:if test="${not empty error}">
+                            <div class="error-message animate__animated animate__shakeX">
+                                <i class="fas fa-exclamation-circle"></i> ${error}
+                            </div>
+                        </c:if>
+
                         <div class="input-group sizzle-input">
-                            <input type="email" id="email" name="email"  required placeholder=" ">
+                            <input type="email" id="email" name="email" required placeholder=" " value="${param.email}">
                             <label for="email"><i class="fas fa-envelope"></i> Email Culinario</label>
                             <span class="input-focus-border"></span>
                         </div>
 
                         <div class="input-group sizzle-input">
-                            <input type="password" id="password" name="password"  required placeholder=" ">
+                            <input type="password" id="password" name="password" required placeholder=" ">
                             <label for="password"><i class="fas fa-lock"></i> Secreto de Cocina</label>
                             <span class="input-focus-border"></span>
                         </div>
@@ -160,116 +168,7 @@
             </div>
         </div>
 
-        <script>
-            // Carrusel
-            let currentSlide = 0;
-            const slides = document.querySelectorAll('.recipe-slide');
-            const indicatorsContainer = document.querySelector('.carousel-indicators');
+        <script src="${pageContext.request.contextPath}/js/scriptLogin.js"></script>
 
-            // Crear indicadores
-            slides.forEach((_, index) => {
-                const indicator = document.createElement('span');
-                indicator.classList.add('indicator');
-                if (index === 0)
-                    indicator.classList.add('active');
-                indicator.addEventListener('click', () => goToSlide(index));
-                indicatorsContainer.appendChild(indicator);
-            });
-
-            function updateCarousel() {
-                slides.forEach((slide, index) => {
-                    slide.classList.toggle('active', index === currentSlide);
-                });
-
-                document.querySelectorAll('.indicator').forEach((indicator, i) => {
-                    indicator.classList.toggle('active', i === currentSlide);
-                });
-            }
-
-            function nextSlide() {
-                currentSlide = (currentSlide + 1) % slides.length;
-                updateCarousel();
-            }
-
-            function prevSlide() {
-                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-                updateCarousel();
-            }
-
-            function goToSlide(index) {
-                currentSlide = index;
-                updateCarousel();
-            }
-
-            // Controles del carrusel
-            document.querySelector('.carousel-next').addEventListener('click', nextSlide);
-            document.querySelector('.carousel-prev').addEventListener('click', prevSlide);
-
-            // Auto-avance
-            let slideInterval = setInterval(nextSlide, 5000);
-
-            // Pausar al interactuar
-            const carousel = document.querySelector('.recipe-carousel');
-            carousel.addEventListener('mouseenter', () => clearInterval(slideInterval));
-            carousel.addEventListener('mouseleave', () => {
-                slideInterval = setInterval(nextSlide, 5000);
-            });
-
-            // Animación de formularios
-            function toggleForms() {
-                document.querySelector('.carousel-container').classList.toggle('move-right');
-                document.querySelector('.forms-container').classList.toggle('move-left');
-                document.querySelectorAll('.form-box').forEach(form => {
-                    form.classList.toggle('active');
-                });
-            }
-
-            document.querySelectorAll('.switch-form').forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    toggleForms();
-                });
-            });
-
-            // Efectos inputs
-            document.querySelectorAll('input').forEach(input => {
-                input.addEventListener('focus', function () {
-                    this.parentNode.querySelector('.input-focus-border').style.width = '100%';
-                });
-
-                input.addEventListener('blur', function () {
-                    if (!this.value) {
-                        this.parentNode.querySelector('.input-focus-border').style.width = '0';
-                    }
-                });
-            });
-
-            // Restringir fechas pasadas
-            function setMaxDate() {
-                const today = new Date().toISOString().split('T')[0];
-                document.getElementById('dob').setAttribute('max', today);
-            }
-
-// Validación en tiempo real
-            function validateDate(input) {
-                const selectedDate = new Date(input.value);
-                const today = new Date();
-                today.setHours(0, 0, 0, 0); // Resetear hora a medianoche
-
-                if (selectedDate > today) {
-                    input.setCustomValidity('No puedes seleccionar una fecha futura');
-                } else {
-                    input.setCustomValidity('');
-                }
-            }
-
-// Inicializar al cargar la página
-            window.addEventListener('load', () => {
-                setMaxDate();
-                document.getElementById('dob').addEventListener('change', function () {
-                    validateDate(this);
-                });
-            });
-        </script>
     </body>
 </html>
