@@ -1,26 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dominio;
 
 import java.io.Serializable;
 import java.util.Calendar;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
-/**
- *
- * @author OMEN
- */
 @Entity
 @Table(name = "Usuario")
 public class Usuario implements Serializable {
@@ -141,4 +124,13 @@ public class Usuario implements Serializable {
         this.rol = rol;
     }
 
+    // Métodos adicionales
+
+    public String getNombreCompleto() {
+        return nombre + " " + apellido;
+    }
+
+    public int getCantidadRecetas() {
+        return 0; // puedes reemplazarlo con una consulta real en UsuarioDAO
+    }
 }

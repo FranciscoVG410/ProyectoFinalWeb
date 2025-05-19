@@ -1,7 +1,8 @@
 dominio\Usuario.class
+dominio\Receta.class
+dominio\FotoReceta.class
 DAOs\UsuarioDAO.class
 main\GastroBaseDAO.class
-dominio\Usuario_.class
 interfaces\IUsuarioDAO.class
 conexion\Conexion.class
 dominio\Usuario$Rol.class
