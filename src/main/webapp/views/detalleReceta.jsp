@@ -4,9 +4,161 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Detalle de Receta - GastroBase</title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/estiloDetalle.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/estiloDetalleReceta.css">
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Raleway:wght@400;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <style>
+            /* Estilos adicionales para el carrusel y favoritos */
+            .carousel-container {
+                position: relative;
+                overflow: hidden;
+                border-radius: 8px;
+                height: 400px;
+            }
+            
+            .carousel-slide {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+                transition: opacity 0.5s ease-in-out;
+            }
+            
+            .carousel-slide.active {
+                opacity: 1;
+            }
+            
+            .carousel-slide img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            
+            .carousel-controls {
+                position: absolute;
+                top: 50%;
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                transform: translateY(-50%);
+                z-index: 10;
+            }
+            
+            .carousel-btn {
+                background: rgba(255, 255, 255, 0.7);
+                border: none;
+                padding: 10px;
+                border-radius: 50%;
+                cursor: pointer;
+                transition: all 0.3s;
+            }
+            
+            .carousel-btn:hover {
+                background: rgba(255, 255, 255, 0.9);
+            }
+            
+            .carousel-dots {
+                position: absolute;
+                bottom: 20px;
+                left: 0;
+                right: 0;
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+                z-index: 10;
+            }
+            
+            .dot {
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.5);
+                cursor: pointer;
+                transition: all 0.3s;
+            }
+            
+            .dot.active {
+                background: white;
+                transform: scale(1.2);
+            }
+            
+            /* Estilos para favoritos */
+            .save-recipe-btn {
+                background: #ff6b6b;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-weight: bold;
+                transition: all 0.3s;
+                margin-top: 15px;
+            }
+            
+            .save-recipe-btn:hover {
+                background: #ff5252;
+                transform: translateY(-2px);
+            }
+            
+            .save-recipe-btn.saved {
+                background: #4caf50;
+            }
+            
+            .save-recipe-btn.saved:hover {
+                background: #3d8b40;
+            }
+            
+            .saved-recipes-section {
+                background: #f9f9f9;
+                padding: 20px;
+                border-radius: 8px;
+                margin-top: 30px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+            
+            .saved-recipes-section h2 {
+                margin-bottom: 15px;
+                color: #333;
+            }
+            
+            .saved-recipes-list {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 15px;
+            }
+            
+            .saved-recipe-card {
+                background: white;
+                border-radius: 5px;
+                overflow: hidden;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                transition: transform 0.3s;
+            }
+            
+            .saved-recipe-card:hover {
+                transform: translateY(-5px);
+            }
+            
+            .saved-recipe-img {
+                height: 120px;
+                width: 100%;
+                object-fit: cover;
+            }
+            
+            .saved-recipe-info {
+                padding: 10px;
+            }
+            
+            .saved-recipe-info h3 {
+                margin: 0;
+                font-size: 16px;
+            }
+        </style>
     </head>
     <body>
         <!-- Barra de navegación -->
@@ -29,6 +181,7 @@
                     <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde" alt="Perfil">
                     <div class="profile-menu">
                         <a href="${pageContext.request.contextPath}/perfil"><i class="fas fa-user"></i> Mi Perfil</a>
+                        <a href="${pageContext.request.contextPath}/saved"><i class="fas fa-bookmark"></i> Mis Guardados</a>
                         <a href="${pageContext.request.contextPath}/logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
                     </div>
                 </div>
@@ -58,6 +211,12 @@
                         <span>328 likes</span>
                     </div>
                 </div>
+                
+                <!-- Botón para guardar receta -->
+                <button id="saveRecipeBtn" class="save-recipe-btn">
+                    <i class="far fa-bookmark"></i>
+                    <span>Guardar Receta</span>
+                </button>
             </section>
 
             <!-- Sección principal con dos columnas -->
@@ -122,6 +281,41 @@
                             <li>Añadir un poco de agua de cocción si es necesario para crear una salsa cremosa.</li>
                             <li>Servir inmediatamente con más queso rallado y pimienta.</li>
                         </ol>
+                    </section>
+                    
+                    <!-- Sección de recetas guardadas (puede ser dinámica) -->
+                    <section class="saved-recipes-section">
+                        <h2><i class="fas fa-bookmark"></i> Tus Recetas Guardadas</h2>
+                        <div class="saved-recipes-list">
+                            <div class="saved-recipe-card">
+                                <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c" alt="Ensalada" class="saved-recipe-img">
+                                <div class="saved-recipe-info">
+                                    <h3>Ensalada César</h3>
+                                    <span>15 min</span>
+                                </div>
+                            </div>
+                            <div class="saved-recipe-card">
+                                <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd" alt="Bowl" class="saved-recipe-img">
+                                <div class="saved-recipe-info">
+                                    <h3>Buddha Bowl</h3>
+                                    <span>20 min</span>
+                                </div>
+                            </div>
+                            <div class="saved-recipe-card">
+                                <img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929" alt="Panqueques" class="saved-recipe-img">
+                                <div class="saved-recipe-info">
+                                    <h3>Panqueques Integrales</h3>
+                                    <span>30 min</span>
+                                </div>
+                            </div>
+                            <div class="saved-recipe-card">
+                                <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061" alt="Pasta" class="saved-recipe-img">
+                                <div class="saved-recipe-info">
+                                    <h3>Pesto Casero</h3>
+                                    <span>40 min</span>
+                                </div>
+                            </div>
+                        </div>
                     </section>
                 </div>
 
@@ -270,8 +464,10 @@
                 
                 // Pausar carrusel cuando el mouse está sobre él
                 const carousel = document.querySelector('.recipe-carousel');
-                carousel.addEventListener('mouseenter', stopSlideShow);
-                carousel.addEventListener('mouseleave', startSlideShow);
+                if (carousel) {
+                    carousel.addEventListener('mouseenter', stopSlideShow);
+                    carousel.addEventListener('mouseleave', startSlideShow);
+                }
                 
                 // Mostrar el primer slide al cargar y comenzar slideshow
                 showSlide(0);
@@ -287,10 +483,42 @@
                 document.addEventListener('click', function(event) {
                     const profile = document.querySelector('.user-profile');
                     const menu = document.querySelector('.profile-menu');
-                    if (!profile.contains(event.target) {
+                    if (!profile.contains(event.target)) {
                         menu.classList.remove('show');
                     }
                 });
+                
+                // Función para guardar receta
+                const saveRecipeBtn = document.getElementById('saveRecipeBtn');
+                if (saveRecipeBtn) {
+                    saveRecipeBtn.addEventListener('click', function() {
+                        this.classList.toggle('saved');
+                        const icon = this.querySelector('i');
+                        const text = this.querySelector('span');
+                        
+                        if (this.classList.contains('saved')) {
+                            icon.classList.remove('far');
+                            icon.classList.add('fas');
+                            text.textContent = 'Receta Guardada';
+                            // Aquí podrías agregar lógica para guardar en base de datos
+                            alert('Receta guardada en tus favoritos');
+                        } else {
+                            icon.classList.remove('fas');
+                            icon.classList.add('far');
+                            text.textContent = 'Guardar Receta';
+                            // Aquí podrías agregar lógica para quitar de favoritos
+                            alert('Receta eliminada de tus favoritos');
+                        }
+                    });
+                }
+                
+                // Simular recetas guardadas (en una aplicación real esto vendría de una API)
+                function loadSavedRecipes() {
+                    // Aquí iría la lógica para cargar recetas guardadas del usuario
+                    console.log('Cargando recetas guardadas...');
+                }
+                
+                loadSavedRecipes();
             });
         </script>
     </body>
