@@ -1,7 +1,6 @@
 dominio\Usuario.class
 DAOs\UsuarioDAO.class
 main\GastroBaseDAO.class
-dominio\Usuario_.class
 interfaces\IUsuarioDAO.class
 conexion\Conexion.class
 dominio\Usuario$Rol.class
