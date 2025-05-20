@@ -5,54 +5,147 @@
 package dominio;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author carli
  */
 @Entity
-public class Chef implements Serializable {
+@Table(name = "tblChef")
+public class Chef extends Usuario implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @Column(name = "nombre", nullable = false, length = 50)
+    private String nombre;
 
-    public Long getId() {
-        return id;
-    }
+    @Column(name = "apellido", nullable = false, length = 50)
+    private String apellido;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Column(name = "telefono", unique = true, length = 13)
+    private String telefono;
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+    @Column(name = "urlAvatar", length = 255)
+    private String urlAvatar;
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Chef)) {
-            return false;
-        }
-        Chef other = (Chef) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
+    @Column(name = "pais", length = 255)
+    private String pais;
 
-    @Override
-    public String toString() {
-        return "dominio.Chef[ id=" + id + " ]";
-    }
+    @Column(name = "fechaNacimiento")
+    private LocalDate fechaNacimiento;
+
+    @OneToMany(mappedBy = "chef", cascade = CascadeType.PERSIST)
+    private List<Comentario> comentarios = new ArrayList<>();;
+
+    @OneToMany(mappedBy = "chef", cascade = CascadeType.PERSIST)
+    private List<Favorito> favoritos = new ArrayList<>();;
     
+    @OneToMany(mappedBy = "seguidor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Follow> siguiendo = new HashSet<>();
+
+    @OneToMany(mappedBy = "seguido", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Follow> seguidores = new HashSet<>();
+    
+     @OneToMany(mappedBy = "chef", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Administra> administraciones= new ArrayList<>();
+
+    public Chef() {
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getUrlAvatar() {
+        return urlAvatar;
+    }
+
+    public void setUrlAvatar(String urlAvatar) {
+        this.urlAvatar = urlAvatar;
+    }
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
+    }
+
+    public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public List<Comentario> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(List<Comentario> comentarios) {
+        this.comentarios = comentarios;
+    }
+
+    public List<Favorito> getFavoritos() {
+        return favoritos;
+    }
+
+    public void setFavoritos(List<Favorito> favoritos) {
+        this.favoritos = favoritos;
+    }
+
+    public Set<Follow> getSiguiendo() {
+        return siguiendo;
+    }
+
+    public void setSiguiendo(Set<Follow> siguiendo) {
+        this.siguiendo = siguiendo;
+    }
+
+    public Set<Follow> getSeguidores() {
+        return seguidores;
+    }
+
+    public void setSeguidores(Set<Follow> seguidores) {
+        this.seguidores = seguidores;
+    }
+
+    public List<Administra> getAdministraciones() {
+        return administraciones;
+    }
+
+    public void setAdministraciones(List<Administra> administraciones) {
+        this.administraciones = administraciones;
+    }
+
 }

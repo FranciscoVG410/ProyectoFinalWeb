@@ -1,43 +1,34 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package DAOs;
 
 import conexion.Conexion;
+import conexion.IConexionBD;
 import dominio.Usuario;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
+/**
+ *
+ * @author OMEN
+ */
 public class UsuarioDAO {
 
-    private EntityManager em;
+    private IConexionBD conexion;
 
-    public UsuarioDAO() {
-        this.em = Conexion.getEntityManager();
+    public UsuarioDAO(IConexionBD conexion) {
+        this.conexion = conexion;
     }
 
-    /**
-     * Guarda un nuevo usuario en la base de datos.
-     *
-     * @param usuario objeto Usuario a guardar
-     */
-    public void guardar(Usuario usuario) {
-        EntityTransaction tx = em.getTransaction();
-        try {
-            tx.begin();
-            em.persist(usuario);
-            tx.commit();
-        } catch (Exception e) {
-            if (tx.isActive()) {
-                tx.rollback();
-            }
-            throw e;
-        }
-    }
-
-    // UsuarioDAO.java
     public void crearUsuario(Usuario usuario) {
-        EntityTransaction tx = em.getTransaction();
+        EntityManager em = conexion.getEntityManager();
+        EntityTransaction tx = null;
         try {
+            tx = em.getTransaction();
             tx.begin();
             em.persist(usuario);
             tx.commit();
@@ -49,13 +40,8 @@ public class UsuarioDAO {
         }
     }
 
-    /**
-     * Busca un usuario por su correo electrónico.
-     *
-     * @param correo correo del usuario
-     * @return objeto Usuario o null si no existe
-     */
     public Usuario buscarPorCorreo(String correo) {
+        EntityManager em = conexion.getEntityManager();
         try {
             TypedQuery<Usuario> query = em.createQuery(
                     "SELECT u FROM Usuario u WHERE u.correo = :correo", Usuario.class);
@@ -63,15 +49,6 @@ public class UsuarioDAO {
             return query.getSingleResult();
         } catch (NoResultException e) {
             return null;
-        }
-    }
-
-    /**
-     * Cierra el EntityManager (opcional si se gestiona en un pool).
-     */
-    public void cerrar() {
-        if (em != null && em.isOpen()) {
-            em.close();
         }
     }
 }

@@ -5,54 +5,91 @@
 package dominio;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
 
 /**
  *
  * @author carli
  */
 @Entity
+@Table(name = "tblComentario")
 public class Comentario implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idComentario;
 
-    public Long getId() {
-        return id;
+    @Column(name = "contenido", nullable = false, length = 300)
+    private String contenido;
+
+    @Column(name = "fechaHora", nullable = false)
+    private LocalDateTime fechaHora;
+
+    @ManyToOne
+    @JoinColumn(name = "idReceta", nullable = false)
+    private Receta receta;
+
+    @ManyToOne
+    @JoinColumn(name = "idChef", nullable = false)
+    private Chef chef;
+
+    public Comentario() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getIdComentario() {
+        return idComentario;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+    public void setIdComentario(Long idComentario) {
+        this.idComentario = idComentario;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Comentario)) {
-            return false;
+    public String getContenido() {
+        return contenido;
+    }
+
+    public void setContenido(String contenido) {
+        this.contenido = contenido;
+    }
+
+    public LocalDateTime getFechaHora() {
+        return fechaHora;
+    }
+
+    public void setFechaHora(LocalDateTime fechaHora) {
+        this.fechaHora = fechaHora;
+    }
+
+    public Receta getReceta() {
+        return receta;
+    }
+
+    public void setReceta(Receta receta) {
+        this.receta = receta;
+    }
+
+    public Chef getChef() {
+        return chef;
+    }
+
+    public void setChef(Chef chef) {
+        this.chef = chef;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        if (fechaHora == null) {
+            fechaHora = LocalDateTime.now();
         }
-        Comentario other = (Comentario) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
     }
 
-    @Override
-    public String toString() {
-        return "dominio.Comentario[ id=" + id + " ]";
-    }
-    
 }
