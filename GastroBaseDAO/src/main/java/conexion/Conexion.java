@@ -18,7 +18,7 @@ public class Conexion implements IConexionBD {
 
     public Conexion() {
         try {
-            this.entityManagerFactory = Persistence.createEntityManagerFactory("ChazzBoutique");
+            this.entityManagerFactory = Persistence.createEntityManagerFactory("GastroBase");
         } catch (Exception e) {
             System.err.println("Error al inicializar el EntityManagerFactory: " + e.getMessage());
             e.printStackTrace();
