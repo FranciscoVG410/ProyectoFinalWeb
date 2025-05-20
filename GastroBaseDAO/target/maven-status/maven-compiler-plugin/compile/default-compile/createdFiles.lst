@@ -1,3 +1,4 @@
+conexion\IConexionBD.class
 dominio\Usuario.class
 dominio\Chef.class
 dominio\Receta.class
@@ -5,8 +6,12 @@ dominio\Admin.class
 DAOs\UsuarioDAO.class
 main\GastroBaseDAO.class
 dominio\Comentario.class
+dominio\Administra$Tipo.class
 dominio\Favorito.class
 dominio\FotoReceta.class
+DAOs\RecetaDAO.class
 interfaces\IUsuarioDAO.class
 conexion\Conexion.class
+dominio\Administra.class
+dominio\Follow.class
 dominio\Usuario$Rol.class
