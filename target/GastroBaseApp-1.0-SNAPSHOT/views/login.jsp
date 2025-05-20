@@ -59,11 +59,8 @@
 
                     <form class="culinary-login animate__animated animate__fadeIn animate__delay-1s" 
                           action="${pageContext.request.contextPath}/login" method="POST">
-                        <!-- Mostrar errores si existen -->
                         <c:if test="${not empty error}">
-                            <div class="error-message animate__animated animate__shakeX">
-                                <i class="fas fa-exclamation-circle"></i> ${error}
-                            </div>
+
                         </c:if>
 
                         <div class="input-group sizzle-input">
@@ -105,23 +102,36 @@
                         <h1 class="animate__animated animate__fadeIn">Nuevo Chef<span class="blinking">_</span></h1>
                     </div>
 
-                    <form class="culinary-login animate__animated animate__fadeIn animate__delay-1s" action="${pageContext.request.contextPath}/registro" method="POST">
+                    <form class="culinary-login animate__animated animate__fadeIn animate__delay-1s" action="${pageContext.request.contextPath}/registro" method="POST" enctype="multipart/form-data">
+                        <!-- Foto de perfil arriba -->
+                        <div class="avatar-container">
+                            <input type="file" id="profile-photo" hidden>
+                            <div class="avatar-preview">
+                                <img id="preview" class="preview-image" alt="Vista previa">
+                                <div class="upload-overlay">
+                                    <i class="fas fa-camera"></i>
+                                    <span>Subir foto</span>
+                                </div>
+                            </div>
+                        </div>
+
+
                         <div class="signup-columns">
                             <div class="signup-column">
                                 <div class="input-group sizzle-input">
-                                    <input type="email" id="signup-email" name="email"  required placeholder=" ">
+                                    <input type="email" id="signup-email" name="email" required placeholder=" ">
                                     <label for="signup-email"><i class="fas fa-envelope"></i> Email Culinario</label>
                                     <span class="input-focus-border"></span>
                                 </div>
 
                                 <div class="input-group sizzle-input">
-                                    <input type="text" id="first-name" name="first-name"  required placeholder=" ">
+                                    <input type="text" id="first-name" name="first-name" required placeholder=" ">
                                     <label for="first-name"><i class="fas fa-user"></i> Nombre</label>
                                     <span class="input-focus-border"></span>
                                 </div>
 
                                 <div class="input-group sizzle-input">
-                                    <input type="text" id="last-name" name="last-name"  required placeholder=" ">
+                                    <input type="text" id="last-name" name="last-name" required placeholder=" ">
                                     <label for="last-name"><i class="fas fa-users"></i> Apellido</label>
                                     <span class="input-focus-border"></span>
                                 </div>
@@ -129,26 +139,40 @@
 
                             <div class="signup-column">
                                 <div class="input-group sizzle-input">
-                                    <input type="password" id="signup-password" name="password"  required placeholder=" ">
+                                    <input type="password" id="signup-password" name="password" required placeholder=" ">
                                     <label for="signup-password"><i class="fas fa-lock"></i> Contraseña</label>
                                     <span class="input-focus-border"></span>
                                 </div>
 
                                 <div class="input-group sizzle-input">
-                                    <input type="tel" id="phone" name="phone"  required placeholder=" ">
+                                    <input type="tel" id="phone" name="phone" required placeholder=" ">
                                     <label for="phone"><i class="fas fa-phone"></i> Teléfono</label>
                                     <span class="input-focus-border"></span>
                                 </div>
 
                                 <div class="input-group sizzle-input">
-                                    <input type="date" id="dob" name="dob" value="${param.dob}" required placeholder=" " max="<%= java.time.LocalDate.now()%>"
-                                           oninput="validateDate(this)">
+                                    <input type="date" id="dob" name="dob" value="${param.dob}" required placeholder=" " max="<%= java.time.LocalDate.now()%>">
                                     <label for="dob"><i class="fas fa-birthday-cake"></i> Fecha Nacimiento</label>
                                     <span class="input-focus-border"></span>
-                                    <c:if test="${not empty errorMap['dob']}"></c:if>
                                 </div>
                             </div>
                         </div>
+
+                        <div class="input-group sizzle-input country-select">
+                            <select id="country" name="country" required hidden>
+                                <option value="" disabled selected>Selecciona un país</option>
+                            </select>
+                            <div class="custom-country-select">
+                                <div class="selected-country" onclick="toggleFlags()">
+                                    <span></span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div id="country-flags" class="country-flags-container"></div>
+                            </div>
+                            <label for="country"><i class="fas fa-globe-americas"></i> País</label>
+                            <span class="input-focus-border"></span>
+                        </div>
+
 
                         <button type="submit" class="flame-button">
                             <span>Crear Cuenta</span>
@@ -165,10 +189,8 @@
                         </div>
                     </form>
                 </div>
-            </div>
-        </div>
 
-        <script src="${pageContext.request.contextPath}/js/scriptLogin.js"></script>
+                <script src="${pageContext.request.contextPath}/js/scriptLogin.js"></script>
 
-    </body>
-</html>
+                </body>
+                </html>
