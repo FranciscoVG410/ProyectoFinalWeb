@@ -204,3 +204,11 @@ document.getElementById('profile-photo').addEventListener('change', function(e) 
         preview.style.display = 'none';
     }
 });
+
+// Manejo de mensajes de error
+document.querySelectorAll('.error-message').forEach(error => {
+    setTimeout(() => {
+        error.classList.add('animate__fadeOutUp');
+        setTimeout(() => error.remove(), 500);
+    }, 5000);
+});

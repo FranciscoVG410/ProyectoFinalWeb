@@ -7,6 +7,7 @@ package DAOs;
 import conexion.Conexion;
 import conexion.IConexionBD;
 import dominio.Usuario;
+import interfaces.IUsuarioDAO;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
@@ -16,7 +17,7 @@ import javax.persistence.TypedQuery;
  *
  * @author OMEN
  */
-public class UsuarioDAO {
+public class UsuarioDAO implements IUsuarioDAO {
 
     private IConexionBD conexion;
 

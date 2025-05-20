@@ -57,6 +57,13 @@
                         <h1 class="animate__animated animate__fadeIn">Acceso Chef<span class="blinking">_</span></h1>
                     </div>
 
+                    <% String error = (String) request.getAttribute("error"); %>
+                    <% if (error != null) {%>
+                    <div class="error-message animate__animated animate__fadeInDown">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <%= error%>
+                    </div>
+                    <% }%>
                     <form class="culinary-login animate__animated animate__fadeIn animate__delay-1s" 
                           action="${pageContext.request.contextPath}/login" method="POST">
                         <c:if test="${not empty error}">
@@ -191,6 +198,31 @@
                 </div>
 
                 <script src="${pageContext.request.contextPath}/js/scriptLogin.js"></script>
+
+                <% if ("true".equals(request.getParameter("success"))) { %>
+                <div class="modal-overlay active"></div>
+                <div class="success-modal active animate__animated animate__fadeIn">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>¡Bienvenido Chef!</h3>
+                    <p>Inicio de sesión exitoso</p>
+                    <div class="spices-decoration" style="margin-top: 1rem;">
+                        <i class="fas fa-pepper-hot"></i>
+                        <i class="fas fa-leaf"></i>
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                </div>
+
+                <script>
+                                                    // Cierra automáticamente el modal después de 3 segundos
+                                                    setTimeout(() => {
+                                                        document.querySelector('.success-modal').classList.add('animate__fadeOutUp');
+                                                        document.querySelector('.modal-overlay').classList.remove('active');
+                                                        setTimeout(() => {
+                                                            document.querySelector('.success-modal').remove();
+                                                        }, 500);
+                                                    }, 3000);
+                </script>
+                <% }%>
 
                 </body>
                 </html>
