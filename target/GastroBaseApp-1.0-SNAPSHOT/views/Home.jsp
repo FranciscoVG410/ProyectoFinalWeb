@@ -17,10 +17,10 @@
     <body>
         <!-- Barra de navegación -->
         <nav class="culinary-nav">
-            <div class="nav-brand">
+            <a href="${pageContext.request.contextPath}/views/Home.jsp" class="nav-brand">
                 <i class="fas fa-mortar-pestle logo-icon"></i>
                 <span>GastroBase</span>
-            </div>
+            </a>
 
             <div class="nav-search">
                 <input type="text" placeholder="Buscar recetas, ingredientes...">
@@ -34,7 +34,7 @@
                     <span class="user-greeting">Hola, Chef ${sessionScope.usuario.nombre}</span>
                     <img src="${pageContext.request.contextPath}/${sessionScope.usuario.urlAvatar}" alt="Perfil">
                     <div class="profile-menu">
-                        <a href="${pageContext.request.contextPath}/views/MyProfile.jsp"><i class="fas fa-user"></i> Mi Perfil</a>
+                        <a href="${pageContext.request.contextPath}/misRecetasServlet"><i class="fas fa-user"></i> Mi Perfil</a>
                         <a href="${pageContext.request.contextPath}/views/login.jsp"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
                     </div>
                 </div>
@@ -47,8 +47,8 @@
                 <span class="close-modal" onclick="closeRecipeModal()">&times;</span>
                 <h2><i class="fas fa-utensils"></i> Nueva Receta</h2>
                 <form class="recipe-form" id="recipeForm"
-                      action="${pageContext.request.contextPath}/CrearRecetaServlet"
-                      method="post"
+                      action="${pageContext.request.contextPath}/compartirReceta"
+                      method="POST"
                       enctype="multipart/form-data">
 
                     <div class="form-group">

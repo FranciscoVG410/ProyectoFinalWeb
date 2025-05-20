@@ -110,12 +110,4 @@ function removePreview(idx) {
 }
 
 
-document.getElementById('recipeForm').onsubmit = function (e) {
-    e.preventDefault();
-    if (photoUpload.files.length === 0) {
-        alert('Por favor agrega al menos una foto');
-        return;
-    }
-    closeRecipeModal();
-    alert('¡Receta publicada con éxito!');
-};
+

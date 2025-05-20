@@ -9,8 +9,10 @@ import dominio.Chef;
 import dominio.Receta;
 import exception.PersistenciaException;
 import interfaces.IRecetaDAO;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -55,6 +57,20 @@ public class RecetaDAO implements IRecetaDAO {
             em.close();
         }
     }
+    @Override
+    public List<Receta> obtenerRecetasPorChef(Chef chef) throws PersistenciaException {
+    EntityManager em = conexion.getEntityManager();
+    try {
+        TypedQuery<Receta> query = em.createQuery("SELECT r FROM Receta r WHERE r.chef = :chef", Receta.class);
+        query.setParameter("chef", chef);
+        return query.getResultList();
+    } catch (Exception e) {
+        throw new PersistenciaException("Error al obtener recetas del chef.", e);
+    } finally {
+        em.close();
+    }
+}
+
 
 
 }

@@ -44,6 +44,10 @@ public class Receta implements Serializable {
     @OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FotoReceta> fotos = new ArrayList<>();
 
+     @ManyToOne
+    @JoinColumn(name = "idChef", nullable = false)
+    private Chef chef;
+     
     public Receta() {
     }
 
@@ -125,6 +129,14 @@ public class Receta implements Serializable {
 
     public void setFotos(List<FotoReceta> fotos) {
         this.fotos = fotos;
+    }
+
+    public Chef getChef() {
+        return chef;
+    }
+
+    public void setChef(Chef chef) {
+        this.chef = chef;
     }
 
     public void addFoto(FotoReceta foto) {

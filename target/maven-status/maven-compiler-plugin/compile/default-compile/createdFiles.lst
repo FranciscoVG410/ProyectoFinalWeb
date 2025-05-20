@@ -5,3 +5,4 @@ servlets\LoginServlet.class
 servlets\LogoutServlet.class
 servlets\CrearRecetaServlet.class
 proyefinalWEB\gastrobase\JakartaRestConfiguration.class
+servlets\MisRecetasServlet.class

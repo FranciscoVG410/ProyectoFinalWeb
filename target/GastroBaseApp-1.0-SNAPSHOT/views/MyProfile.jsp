@@ -18,10 +18,10 @@
     <body>
         <!-- Barra de navegación -->
         <nav class="culinary-nav">
-            <div class="nav-brand">
+            <a href="${pageContext.request.contextPath}/views/Home.jsp" class="nav-brand">
                 <i class="fas fa-mortar-pestle logo-icon"></i>
                 <span>GastroBase</span>
-            </div>
+            </a>
 
             <div class="nav-search">
                 <input type="text" placeholder="Buscar recetas, ingredientes...">
@@ -32,11 +32,11 @@
 
             <div class="nav-actions">
                 <div class="user-profile" onclick="toggleProfileMenu()">
-                    <span class="user-greeting">Hola, Chef Alejandro</span>
-                    <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde" alt="Perfil">
+                    <span class="user-greeting">Hola, Chef ${sessionScope.usuario.nombre}</span>
+                    <img src="${pageContext.request.contextPath}/${sessionScope.usuario.urlAvatar}" alt="Perfil">
                     <div class="profile-menu">
-                        <a href="${pageContext.request.contextPath}/perfil"><i class="fas fa-user"></i> Mi Perfil</a>
-                        <a href="${pageContext.request.contextPath}/logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+                        <a href="${pageContext.request.contextPath}/views/MyProfile.jsp"><i class="fas fa-user"></i> Mi Perfil</a>
+                        <a href="${pageContext.request.contextPath}/views/login.jsp"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
                     </div>
                 </div>
             </div>
@@ -53,11 +53,11 @@
                 </div>
                 <div class="profile-info">
                     <div class="profile-avatar">
-                        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde" alt="Avatar">
+                        <img src="${pageContext.request.contextPath}/${sessionScope.usuario.urlAvatar}" alt="Avatar">
                     </div>
                     <div class="profile-details">
                         <div class="profile-heading">
-                            <h1>Chef Alejandro Martínez</h1>
+                            <h1>Chef ${sessionScope.usuario.nombre} ${sessionScope.usuario.apellido}</h1>
                             <button class="edit-profile-btn">
                                 <i class="fas fa-pencil-alt"></i> Editar Perfil
                             </button>
@@ -93,19 +93,19 @@
                     <div class="info-grid">
                         <div class="info-item">
                             <label>Nombre completo:</label>
-                            <p>Alejandro Martínez Rojas</p>
+                            <p>${sessionScope.usuario.nombre} ${sessionScope.usuario.apellido}</p>
                         </div>
                         <div class="info-item">
                             <label>Fecha de nacimiento:</label>
-                            <p>15 Marzo 1990</p>
+                            <p>${sessionScope.usuario.fechaNacimiento}</p>
                         </div>
                         <div class="info-item">
                             <label>País:</label>
-                            <p>🇪🇸 España</p>
+                            <p>${sessionScope.usuario.pais}</p>
                         </div>
                         <div class="info-item">
-                            <label>Experiencia:</label>
-                            <p>12 años en cocina profesional</p>
+                            <label>Telefono:</label>
+                            <p>${sessionScope.usuario.telefono}</p>
                         </div>
                     </div>
                 </section>
@@ -126,6 +126,9 @@
                     </button>
                 </div>
 
+                
+                <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
                 <!-- Contenido de tabs -->
                 <div id="my-recipes" class="tab-content active">
                     <div class="recipes-header">
@@ -137,59 +140,25 @@
                     <div class="recipes-grid">
 
                         <div class="recipes-grid">
-                            <!-- Receta 1 -->
-                            <article class="recipe-card">
-                                <div class="recipe-header">
-                                    <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288" alt="Salmón a la parrilla">
-                                    <div class="recipe-meta">
-                                        <h3>Salmón con Hierbas Provenzales</h3>
-                                        <div class="recipe-stats">
-                                            <span><i class="fas fa-heart"></i> 458</span>
-                                            <span><i class="fas fa-comment"></i> 68</span>
+                            <c:forEach var="receta" items="${misRecetas}">
+                                <article class="recipe-card">
+                                    <div class="recipe-header">
+                                        <img src="${pageContext.request.contextPath}/${receta.fotos[0].url}" alt="${receta.nombre}">
+                                        <div class="recipe-meta">
+                                            <h3>${receta.nombre}</h3>
+                                            <div class="recipe-stats">
+                                                <span><i class="fas fa-clock"></i> ${receta.tiempo} min</span>
+                                                <span><i class="fas fa-users"></i> ${receta.numPersonas} personas</span>
+                                                <span><i class="fas fa-chart-line"></i> ${receta.complejidad}</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="recipe-actions">
-                                    <button class="edit-btn"><i class="fas fa-edit"></i> Editar</button>
-                                    <button class="delete-btn"><i class="fas fa-trash"></i> Eliminar</button>
-                                </div>
-                            </article>
-
-                            <!-- Receta 2 -->
-                            <article class="recipe-card">
-                                <div class="recipe-header">
-                                    <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587" alt="Pastel de chocolate">
-                                    <div class="recipe-meta">
-                                        <h3>Volcán de Chocolate Negro</h3>
-                                        <div class="recipe-stats">
-                                            <span><i class="fas fa-heart"></i> 892</span>
-                                            <span><i class="fas fa-comment"></i> 124</span>
-                                        </div>
+                                    <div class="recipe-actions">
+                                        <button class="edit-btn"><i class="fas fa-edit"></i> Editar</button>
+                                        <button class="delete-btn"><i class="fas fa-trash"></i> Eliminar</button>
                                     </div>
-                                </div>
-                                <div class="recipe-actions">
-                                    <button class="edit-btn"><i class="fas fa-edit"></i> Editar</button>
-                                    <button class="delete-btn"><i class="fas fa-trash"></i> Eliminar</button>
-                                </div>
-                            </article>
-
-                            <!-- Receta 3 -->
-                            <article class="recipe-card">
-                                <div class="recipe-header">
-                                    <img src="https://images.unsplash.com/photo-1598214886806-c87b84b7078b" alt="Risotto">
-                                    <div class="recipe-meta">
-                                        <h3>Risotto de Hongos Silvestres</h3>
-                                        <div class="recipe-stats">
-                                            <span><i class="fas fa-heart"></i> 672</span>
-                                            <span><i class="fas fa-comment"></i> 89</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="recipe-actions">
-                                    <button class="edit-btn"><i class="fas fa-edit"></i> Editar</button>
-                                    <button class="delete-btn"><i class="fas fa-trash"></i> Eliminar</button>
-                                </div>
-                            </article>
+                                </article>
+                            </c:forEach>
                         </div>
                     </div>
                 </div>

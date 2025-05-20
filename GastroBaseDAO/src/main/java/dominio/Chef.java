@@ -43,19 +43,25 @@ public class Chef extends Usuario implements Serializable {
     private LocalDate fechaNacimiento;
 
     @OneToMany(mappedBy = "chef", cascade = CascadeType.PERSIST)
-    private List<Comentario> comentarios = new ArrayList<>();;
+    private List<Comentario> comentarios = new ArrayList<>();
+    ;
 
     @OneToMany(mappedBy = "chef", cascade = CascadeType.PERSIST)
-    private List<Favorito> favoritos = new ArrayList<>();;
+    private List<Receta> recetas = new ArrayList<>();
+    ;
+    
+    @OneToMany(mappedBy = "chef", cascade = CascadeType.PERSIST)
+    private List<Favorito> favoritos = new ArrayList<>();
+    ;
     
     @OneToMany(mappedBy = "seguidor", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Follow> siguiendo = new HashSet<>();
 
     @OneToMany(mappedBy = "seguido", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Follow> seguidores = new HashSet<>();
-    
-     @OneToMany(mappedBy = "chef", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Administra> administraciones= new ArrayList<>();
+
+    @OneToMany(mappedBy = "chef", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Administra> administraciones = new ArrayList<>();
 
     public Chef() {
     }
@@ -146,6 +152,14 @@ public class Chef extends Usuario implements Serializable {
 
     public void setAdministraciones(List<Administra> administraciones) {
         this.administraciones = administraciones;
+    }
+
+    public List<Receta> getRecetas() {
+        return recetas;
+    }
+
+    public void setRecetas(List<Receta> recetas) {
+        this.recetas = recetas;
     }
 
 }

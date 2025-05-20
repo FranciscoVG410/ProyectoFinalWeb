@@ -8,21 +8,25 @@ import dominio.FotoReceta;
 import dominio.Receta;
 import exception.PersistenciaException;
 import interfaces.IRecetaDAO;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Collection;
 
-@WebServlet("/CrearRecetaServlet")
+@WebServlet(name = "compartirReceta", urlPatterns = {"/compartirReceta"})
 @MultipartConfig(
-        fileSizeThreshold = 1024 * 1024 * 1, // 1MB
-        maxFileSize = 1024 * 1024 * 5, // 5MB por archivo
-        maxRequestSize = 1024 * 1024 * 25 // 25MB total
+        fileSizeThreshold = 1024 * 1024 * 2, // 2MB antes de escribir a disco
+        maxFileSize = 1024 * 1024 * 10, // 10MB por archivo
+        maxRequestSize = 1024 * 1024 * 50 // 50MB total
 )
 public class CrearRecetaServlet extends HttpServlet {
 
@@ -37,7 +41,6 @@ public class CrearRecetaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         try {
             // 1. Obtener campos del formulario
             String titulo = request.getParameter("titulo");
@@ -59,6 +62,7 @@ public class CrearRecetaServlet extends HttpServlet {
             receta.setComplejidad(complejidad);
             receta.setIngredientes(ingredientes);
             receta.setProceso(instrucciones);
+            receta.setChef(chef);
 
             // 4. Guardar imágenes y agregar FotoReceta
             String uploadPath = getServletContext().getRealPath("/uploads");

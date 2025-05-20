@@ -15,7 +15,15 @@
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>compartirReceta</servlet-name>
+        <servlet-class>servlets.CrearRecetaServlet</servlet-class>
+    </servlet>
 
+    <servlet-mapping>
+        <servlet-name>compartirReceta</servlet-name>
+        <url-pattern>/compartirReceta</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>register</servlet-name>
         <servlet-class>servlets.SignUpServlet</servlet-class>

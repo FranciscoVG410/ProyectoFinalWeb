@@ -4,14 +4,21 @@
  */
 package interfaces;
 
+import dominio.Chef;
 import dominio.Receta;
 import exception.PersistenciaException;
+import java.util.List;
 
 /**
  *
  * @author carli
  */
 public interface IRecetaDAO {
+
     public void crearReceta(Receta receta) throws PersistenciaException;
-    public Receta buscarPorId(Long id) throws PersistenciaException ;
+
+    public Receta buscarPorId(Long id) throws PersistenciaException;
+
+    public List<Receta> obtenerRecetasPorChef(Chef chef) throws PersistenciaException;
+
 }
