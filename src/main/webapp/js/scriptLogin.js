@@ -101,4 +101,106 @@ window.addEventListener('load', () => {
     document.getElementById('dob').addEventListener('change', function () {
         validateDate(this);
     });
+});// Función para cargar países con banderas
+async function loadCountries() {
+    try {
+        const response = await fetch('https://restcountries.com/v3.1/all?fields=name,cca2,flags');
+        const countries = await response.json();
+        const select = document.getElementById('country');
+        const flagsContainer = document.getElementById('country-flags');
+        
+        countries.sort((a, b) => a.name.common.localeCompare(b.name.common));
+        
+        countries.forEach(country => {
+            // Opción para el select oculto
+            const option = document.createElement('option');
+            option.value = country.name.common;
+            option.textContent = country.name.common;
+            select.appendChild(option);
+
+            // Elemento de bandera personalizado
+            const flagElement = document.createElement('div');
+            flagElement.className = 'country-option';
+            flagElement.innerHTML = `
+                <img src="${country.flags.png}" 
+                     alt="${country.name.common} Flag" 
+                     class="country-flag">
+                <span>${country.name.common}</span>
+            `;
+            
+            flagElement.addEventListener('click', () => {
+                select.value = country.name.common;
+                document.querySelector('.selected-country span').textContent = country.name.common;
+                flagsContainer.style.display = 'none';
+                document.querySelector('.country-select label').classList.add('has-value');
+            });
+            
+            flagsContainer.appendChild(flagElement);
+        });
+
+        // Manejar clic fuera del selector
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.custom-country-select')) {
+                flagsContainer.style.display = 'none';
+            }
+        });
+    } catch (error) {
+        console.error('Error loading countries:', error);
+    }
+}
+
+// Función para mostrar/ocultar banderas
+function toggleFlags() {
+    const flagsContainer = document.getElementById('country-flags');
+    flagsContainer.style.display = flagsContainer.style.display === 'block' ? 'none' : 'block';
+}
+
+// Vista previa de imagen en círculo
+document.getElementById('profile-photo').addEventListener('change', function(e) {
+    const preview = document.getElementById('preview');
+    const file = e.target.files[0];
+    
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+            preview.parentElement.classList.add('has-image');
+        }
+        reader.readAsDataURL(file);
+    }
+});
+
+// Inicialización
+window.addEventListener('DOMContentLoaded', () => {
+    loadCountries();
+});
+    document.querySelector('.avatar-container').addEventListener('click', function(e) {
+        if (!e.target.matches('input[type="file"]')) {
+            document.getElementById('profile-photo').click();
+        }
+    });
+    
+
+document.getElementById('profile-photo').addEventListener('change', function(e) {
+    const preview = document.getElementById('preview');
+    const container = document.querySelector('.avatar-container');
+    const file = e.target.files[0];
+    
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            container.classList.add('has-image');
+            
+            // Ajuste final de posición
+            setTimeout(() => {
+                preview.style.transform = 'translate(-50%, -50%)';
+            }, 10);
+        }
+        reader.readAsDataURL(file);
+    } else {
+        container.classList.remove('has-image');
+        preview.style.display = 'none';
+    }
 });

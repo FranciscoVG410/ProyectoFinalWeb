@@ -7,8 +7,8 @@
     --spice-red: #E74C3C;
     --spice-yellow: #F1C40F;
     --spice-green: #27AE60;
-    --spicy-green: #2ECC71; 
-    --herb-dark: #27AE60; 
+    --spicy-green: #2ECC71;
+    --herb-dark: #27AE60;
 }
 
 * {
@@ -37,11 +37,11 @@ body {
 }
 
 .recipe-carousel {
-    border: 3px solid #000; 
-    border-radius: 15px;    
-    overflow: hidden;       
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
-    margin: 10px;         
+    border: 3px solid #000;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    margin: 10px;
 }
 
 .recipe-slide {
@@ -292,14 +292,14 @@ h1:hover::after {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 100%; 
+    width: 100%;
     height: 3px;
     background: linear-gradient(
         90deg,
         var(--flame-orange) 0%,
         var(--spicy-green) 100%
         );
-    transform: scaleX(0); 
+    transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.5s ease;
     z-index: 2;
@@ -311,7 +311,7 @@ h1:hover::after {
 .sizzle-input input:focus,
 .sizzle-input input:not(:placeholder-shown) {
     border-bottom-color: transparent;
-    transform: scaleX(1); 
+    transform: scaleX(1);
 }
 
 .sizzle-input input:focus ~ .input-focus-border,
@@ -491,6 +491,37 @@ input[type="date"]:invalid {
 input[type="date"]:invalid + label {
     color: var(--spice-red) !important;
 }
+
+
+.upload-button {
+    background: var(--flame-orange);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    border: none;
+    font-size: 0.95em;
+}
+
+.upload-button:hover {
+    background: var(--spice-red);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255,107,53,0.3);
+}
+
+.preview-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-top: 1rem;
+    border: 3px solid var(--flame-orange);
+    display: none;
+}
 @keyframes spiceFloat {
     0%, 100% {
         transform: translateY(0) rotate(0deg);
@@ -561,4 +592,137 @@ input[type="date"]:invalid + label {
     .move-left .forms-container {
         transform: translateX(-100%);
     }
+}
+.avatar-container {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 2rem;
+    position: relative;
+    border-radius: 50%;
+    border: 3px solid var(--flame-orange);
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.avatar-preview {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.preview-image {
+    position: absolute;
+    top: 38%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centrar perfectamente */
+    width: 110%;
+    height: 110%;
+    object-fit: cover; /* Ajustar imagen manteniendo proporciones */
+    display: none;
+    border-radius: 50%; /* Heredar borde redondo del contenedor */
+}
+
+.has-image .preview-image {
+    display: block;
+}
+
+.upload-overlay {
+    position: absolute;
+    top: -3px; /* Compensar el borde del container */
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    color: white;
+}
+
+.avatar-container:hover .upload-overlay {
+    opacity: 1;
+    border-color: var(--flame-orange);
+}
+.selected-country {
+    padding: 12px 0;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.country-flags-container {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 200px;
+    overflow-y: auto;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+#profile-photo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 2;
+}
+/* Cuando hay imagen */
+.has-image .preview-image {
+    display: block;
+}
+.country-option {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.country-option:hover {
+    background: #f8f9fa;
+}
+
+.country-flag {
+    width: 30px;
+    height: 20px;
+    margin-right: 10px;
+    object-fit: cover;
+    border: 1px solid #ddd;
+}
+
+/* Ajuste para la etiqueta del país */
+.country-select label {
+    pointer-events: none;
+    transition: all 0.3s ease;
+    position: absolute;
+    left: 0;
+    top: 1rem;
+    color: #666;
+}
+
+.country-select label.has-value {
+    transform: translateY(-1.5rem);
+    font-size: 0.8rem;
+    color: var(--flame-orange);
+}
+
+/* Ocultar select original */
+.country-select select {
+    display: none;
 }
