@@ -5,6 +5,7 @@
 package DAOs;
 
 import conexion.Conexion;
+import conexion.IConexionBD;
 import dominio.Usuario;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -16,16 +17,18 @@ import javax.persistence.TypedQuery;
  * @author OMEN
  */
 public class UsuarioDAO {
-    private EntityManager em;
-    private Conexion conexion;
 
-    public UsuarioDAO() {
-        this.em = Conexion.getEntityManager();
+    private IConexionBD conexion;
+
+    public UsuarioDAO(IConexionBD conexion) {
+        this.conexion = conexion;
     }
 
     public void crearUsuario(Usuario usuario) {
-        EntityTransaction tx = em.getTransaction();
+        EntityManager em = conexion.getEntityManager();
+        EntityTransaction tx = null;
         try {
+            tx = em.getTransaction();
             tx.begin();
             em.persist(usuario);
             tx.commit();
@@ -36,8 +39,9 @@ public class UsuarioDAO {
             throw e;
         }
     }
-    
+
     public Usuario buscarPorCorreo(String correo) {
+        EntityManager em = conexion.getEntityManager();
         try {
             TypedQuery<Usuario> query = em.createQuery(
                     "SELECT u FROM Usuario u WHERE u.correo = :correo", Usuario.class);

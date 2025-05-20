@@ -1,47 +1,32 @@
 package dominio;
 
 import java.io.Serializable;
-import java.util.Calendar;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Usuario")
-public class Usuario implements Serializable {
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "tblUsuario")
+public abstract class Usuario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUsuario;
 
-    @Column(nullable = false, length = 50)
-    private String nombre;
-
-    @Column(nullable = false, length = 50)
-    private String apellido;
-
-    @Column(nullable = false, length = 255, unique = true)
+    @Column(name = "correo", nullable = false, length = 255, unique = true)
     private String correo;
 
-    @Column(nullable = false, length = 255)
+    @Column(name = "contrasenia", nullable = false, length = 25)
     private String contrasenia;
-
-    @Column(unique = true, length = 13)
-    private String telefono;
-
-    @Column(length = 255)
-    private String urlAvatar;
-
-    @Column(length = 255)
-    private String ciudad;
-
-    @Temporal(TemporalType.DATE)
-    private Calendar fechaNacimiento;
-
+    
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Rol rol;
 
     public enum Rol {
-        ADMIN, NORMAL
+        ADMIN, CHEF
+    }
+
+    public Usuario() {
     }
 
     public Long getIdUsuario() {
@@ -50,22 +35,6 @@ public class Usuario implements Serializable {
 
     public void setIdUsuario(Long idUsuario) {
         this.idUsuario = idUsuario;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
     }
 
     public String getCorreo() {
@@ -84,38 +53,6 @@ public class Usuario implements Serializable {
         this.contrasenia = contrasenia;
     }
 
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public String getUrlAvatar() {
-        return urlAvatar;
-    }
-
-    public void setUrlAvatar(String urlAvatar) {
-        this.urlAvatar = urlAvatar;
-    }
-
-    public String getCiudad() {
-        return ciudad;
-    }
-
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
-    }
-
-    public Calendar getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(Calendar fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
     public Rol getRol() {
         return rol;
     }
@@ -125,11 +62,6 @@ public class Usuario implements Serializable {
     }
 
     // Métodos adicionales
-
-    public String getNombreCompleto() {
-        return nombre + " " + apellido;
-    }
-
     public int getCantidadRecetas() {
         return 0; // puedes reemplazarlo con una consulta real en UsuarioDAO
     }
