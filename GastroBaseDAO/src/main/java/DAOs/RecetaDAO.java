@@ -5,7 +5,10 @@
 package DAOs;
 
 import conexion.IConexionBD;
+import dominio.Chef;
 import dominio.Receta;
+import exception.PersistenciaException;
+import interfaces.IRecetaDAO;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
@@ -13,7 +16,7 @@ import javax.persistence.EntityTransaction;
  *
  * @author carli
  */
-public class RecetaDAO {
+public class RecetaDAO implements IRecetaDAO {
 
     private IConexionBD conexion;
 
@@ -21,9 +24,11 @@ public class RecetaDAO {
         this.conexion = conexion;
     }
 
-    public void crear(Receta receta) {
+    @Override
+    public void crearReceta(Receta receta) throws PersistenciaException {
         EntityManager em = conexion.getEntityManager();
         EntityTransaction tx = em.getTransaction();
+
         try {
             tx.begin();
             em.persist(receta);
@@ -32,36 +37,24 @@ public class RecetaDAO {
             if (tx.isActive()) {
                 tx.rollback();
             }
-            throw e;
+            throw new PersistenciaException("Error al crear la receta: " + e.getMessage(), e);
+        } finally {
+            em.close();
         }
     }
 
-    public Receta buscarPorId(Long id) {
-        return conexion.getEntityManager().find(Receta.class, id);
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+      @Override
+    public Receta buscarPorId(Long id) throws PersistenciaException {
+        EntityManager em = conexion.getEntityManager();
+
+        try {
+            return em.find(Receta.class, id);
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al buscar la receta ID: " + id, e);
+        } finally {
+            em.close();
+        }
     }
+
 
 }

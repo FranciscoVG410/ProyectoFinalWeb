@@ -1,7 +1,10 @@
+interfaces\IChefDAO.class
 dominio\Admin.class
 DAOs\UsuarioDAO.class
 DAOs\FollowDAO.class
 DAOs\AdminDAO.class
+interfaces\IRecetaDAO.class
+exception\PersistenciaException.class
 DAOs\ChefDAO.class
 dominio\Favorito.class
 DAOs\ComentarioDAO.class

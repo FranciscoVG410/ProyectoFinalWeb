@@ -109,10 +109,10 @@
                         <h1 class="animate__animated animate__fadeIn">Nuevo Chef<span class="blinking">_</span></h1>
                     </div>
 
-                    <form class="culinary-login animate__animated animate__fadeIn animate__delay-1s" action="${pageContext.request.contextPath}/registro" method="POST" enctype="multipart/form-data">
+                    <form class="culinary-login animate__animated animate__fadeIn animate__delay-1s" action="${pageContext.request.contextPath}/register" method="POST" enctype="multipart/form-data">
                         <!-- Foto de perfil arriba -->
                         <div class="avatar-container">
-                            <input type="file" id="profile-photo" hidden>
+                            <input type="file" id="profile-photo" name="profile-photo" hidden>
                             <div class="avatar-preview">
                                 <img id="preview" class="preview-image" alt="Vista previa">
                                 <div class="upload-overlay">

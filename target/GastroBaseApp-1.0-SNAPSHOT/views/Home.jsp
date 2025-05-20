@@ -31,8 +31,8 @@
 
             <div class="nav-actions">
                 <div class="user-profile" onclick="toggleProfileMenu()">
-                    <span class="user-greeting">Hola, Chef Alejandro</span>
-                    <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde" alt="Perfil">
+                    <span class="user-greeting">Hola, Chef ${sessionScope.usuario.nombre}</span>
+                    <img src="${pageContext.request.contextPath}/${sessionScope.usuario.urlAvatar}" alt="Perfil">
                     <div class="profile-menu">
                         <a href="${pageContext.request.contextPath}/views/MyProfile.jsp"><i class="fas fa-user"></i> Mi Perfil</a>
                         <a href="${pageContext.request.contextPath}/views/login.jsp"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
@@ -46,26 +46,30 @@
             <div class="modal-content">
                 <span class="close-modal" onclick="closeRecipeModal()">&times;</span>
                 <h2><i class="fas fa-utensils"></i> Nueva Receta</h2>
-                <form class="recipe-form" id="recipeForm">
+                <form class="recipe-form" id="recipeForm"
+                      action="${pageContext.request.contextPath}/CrearRecetaServlet"
+                      method="post"
+                      enctype="multipart/form-data">
+
                     <div class="form-group">
                         <label>Título de la receta</label>
-                        <input type="text" placeholder="Ej: Paella Valenciana" required>
+                        <input type="text" name="titulo" placeholder="Ej: Paella Valenciana" required>
                     </div>
 
                     <div class="specs-grid">
                         <div class="form-group">
                             <label><i class="fas fa-clock"></i> Tiempo (min)</label>
-                            <input type="number" min="1" placeholder="30" required>
+                            <input type="number" name="tiempo" min="1" placeholder="30" required>
                         </div>
 
                         <div class="form-group">
                             <label><i class="fas fa-users"></i> Personas</label>
-                            <input type="number" min="1" placeholder="4" required>
+                            <input type="number" name="personas" min="1" placeholder="4" required>
                         </div>
 
                         <div class="form-group">
                             <label><i class="fas fa-signal"></i> Complejidad</label>
-                            <select required>
+                            <select name="complejidad" required>
                                 <option value="">Seleccionar...</option>
                                 <option>Fácil</option>
                                 <option>Media</option>
@@ -76,18 +80,18 @@
 
                     <div class="form-group">
                         <label><i class="fas fa-carrot"></i> Ingredientes</label>
-                        <textarea rows="4" placeholder="1 taza de arroz..." required></textarea>
+                        <textarea name="ingredientes" rows="4" placeholder="1 taza de arroz..." required></textarea>
                     </div>
 
                     <div class="form-group">
                         <label><i class="fas fa-list-ol"></i> Instrucciones</label>
-                        <textarea rows="6" placeholder="1. Calentar el aceite..." required></textarea>
+                        <textarea name="instrucciones" rows="6" placeholder="1. Calentar el aceite..." required></textarea>
                     </div>
 
                     <div class="form-group">
                         <label><i class="fas fa-camera"></i> Fotos de la receta</label>
                         <div class="file-upload" id="fileUploadContainer">
-                            <input type="file" accept="image/*" multiple id="photoUpload">
+                            <input type="file" name="fotos" accept="image/*" multiple id="photoUpload">
                             <div class="upload-content">
                                 <i class="fas fa-cloud-upload-alt"></i>
                                 <span>Haz clic o arrastra hasta 5 fotos</span>
@@ -105,6 +109,7 @@
                 </form>
             </div>
         </div>
+
 
         <!-- Contenido principal -->
         <main class="culinary-main">
@@ -217,7 +222,7 @@
                 <i class="fas fa-plus"></i>
             </button>
         </div>
-    <script src="${pageContext.request.contextPath}/js/scriptRecetas.js"></script>
+        <script src="${pageContext.request.contextPath}/js/scriptRecetas.js"></script>
 
     </body>
 </html>
