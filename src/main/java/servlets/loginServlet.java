@@ -10,6 +10,8 @@ package servlets;
  */
 
 import DAOs.UsuarioDAO;
+import conexion.Conexion;
+import conexion.IConexionBD;
 import dominio.Usuario;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -31,7 +33,8 @@ public class loginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         try {
-            UsuarioDAO usuarioDAO = new UsuarioDAO();
+            IConexionBD conexion = new Conexion();
+            UsuarioDAO usuarioDAO = new UsuarioDAO(conexion);
             Usuario usuario = usuarioDAO.buscarPorCorreo(email);
 
             if (usuario == null || !usuario.getContrasenia().equals(password)) {

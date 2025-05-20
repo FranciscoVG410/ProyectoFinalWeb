@@ -6,7 +6,9 @@ package dominio;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -41,6 +43,13 @@ public class Chef extends Usuario implements Serializable {
 
     @Column(name = "fechaNacimiento")
     private LocalDate fechaNacimiento;
+    
+    public static LocalDate convertirCalendarALocalDate(Calendar calendar) {
+        if (calendar == null) {
+            return null;
+        }
+        return calendar.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
 
     @OneToMany(mappedBy = "chef", cascade = CascadeType.PERSIST)
     private List<Comentario> comentarios = new ArrayList<>();;
