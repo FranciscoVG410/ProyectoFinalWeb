@@ -25,6 +25,7 @@ public class UsuarioDAO implements IUsuarioDAO {
         this.conexion = conexion;
     }
 
+    @Override
     public void crearUsuario(Usuario usuario) {
         EntityManager em = conexion.getEntityManager();
         EntityTransaction tx = null;
