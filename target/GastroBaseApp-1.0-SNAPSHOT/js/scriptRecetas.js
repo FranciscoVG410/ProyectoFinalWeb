@@ -109,5 +109,16 @@ function removePreview(idx) {
     photoUpload.dispatchEvent(new Event('change'));
 }
 
+function openTab(tabName, event) {
+    const tabContents = document.querySelectorAll('.tab-content');
+    const tabButtons = document.querySelectorAll('.tab-button');
+
+    tabContents.forEach(tab => tab.classList.remove('active'));
+    tabButtons.forEach(btn => btn.classList.remove('active'));
+
+    document.getElementById(tabName).classList.add('active');
+    event.currentTarget.classList.add('active');
+}
+
 
 

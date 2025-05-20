@@ -94,7 +94,7 @@ public class CrearRecetaServlet extends HttpServlet {
             recetaDAO.crearReceta(receta);
 
             // 6. Redirigir
-            response.sendRedirect("views/MyProfile.jsp");
+            response.sendRedirect(request.getContextPath() + "/misRecetasServlet");
 
         } catch (PersistenciaException e) {
             e.printStackTrace();

@@ -110,23 +110,24 @@
                     </div>
                 </section>
 
-                <!-- Tabs de navegación -->
+                <!-- Tabs de navegación corregidos -->
                 <div class="profile-tabs">
-                    <button class="tab-button active" onclick="openTab('my-recipes')">
+                    <button class="tab-button active" onclick="openTab('my-recipes', event)">
                         <i class="fas fa-book-open"></i> Mis Recetas
                     </button>
-                    <button class="tab-button" onclick="openTab('favorites')">
+                    <button class="tab-button" onclick="openTab('favorites', event)">
                         <i class="fas fa-heart"></i> Favoritos
                     </button>
-                    <button class="tab-button" onclick="openTab('followers')">
+                    <button class="tab-button" onclick="openTab('followers', event)">
                         <i class="fas fa-users"></i> Seguidores
                     </button>
-                    <button class="tab-button" onclick="openTab('following')">
+                    <button class="tab-button" onclick="openTab('following', event)">
                         <i class="fas fa-user-friends"></i> Siguiendo
                     </button>
                 </div>
 
-                
+
+
                 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
                 <!-- Contenido de tabs -->
@@ -164,30 +165,35 @@
                 </div>
             </div>
 
+            <!-- Modal para nueva receta -->
             <div class="new-recipe-modal" id="recipeModal">
                 <div class="modal-content">
                     <span class="close-modal" onclick="closeRecipeModal()">&times;</span>
                     <h2><i class="fas fa-utensils"></i> Nueva Receta</h2>
-                    <form class="recipe-form" id="recipeForm">
+                    <form class="recipe-form" id="recipeForm"
+                          action="${pageContext.request.contextPath}/compartirReceta"
+                          method="POST"
+                          enctype="multipart/form-data">
+
                         <div class="form-group">
                             <label>Título de la receta</label>
-                            <input type="text" placeholder="Ej: Paella Valenciana" required>
+                            <input type="text" name="titulo" placeholder="Ej: Paella Valenciana" required>
                         </div>
 
                         <div class="specs-grid">
                             <div class="form-group">
                                 <label><i class="fas fa-clock"></i> Tiempo (min)</label>
-                                <input type="number" min="1" placeholder="30" required>
+                                <input type="number" name="tiempo" min="1" placeholder="30" required>
                             </div>
 
                             <div class="form-group">
                                 <label><i class="fas fa-users"></i> Personas</label>
-                                <input type="number" min="1" placeholder="4" required>
+                                <input type="number" name="personas" min="1" placeholder="4" required>
                             </div>
 
                             <div class="form-group">
                                 <label><i class="fas fa-signal"></i> Complejidad</label>
-                                <select required>
+                                <select name="complejidad" required>
                                     <option value="">Seleccionar...</option>
                                     <option>Fácil</option>
                                     <option>Media</option>
@@ -198,18 +204,18 @@
 
                         <div class="form-group">
                             <label><i class="fas fa-carrot"></i> Ingredientes</label>
-                            <textarea rows="4" placeholder="1 taza de arroz..." required></textarea>
+                            <textarea name="ingredientes" rows="4" placeholder="1 taza de arroz..." required></textarea>
                         </div>
 
                         <div class="form-group">
                             <label><i class="fas fa-list-ol"></i> Instrucciones</label>
-                            <textarea rows="6" placeholder="1. Calentar el aceite..." required></textarea>
+                            <textarea name="instrucciones" rows="6" placeholder="1. Calentar el aceite..." required></textarea>
                         </div>
 
                         <div class="form-group">
                             <label><i class="fas fa-camera"></i> Fotos de la receta</label>
                             <div class="file-upload" id="fileUploadContainer">
-                                <input type="file" accept="image/*" multiple id="photoUpload">
+                                <input type="file" name="fotos" accept="image/*" multiple id="photoUpload">
                                 <div class="upload-content">
                                     <i class="fas fa-cloud-upload-alt"></i>
                                     <span>Haz clic o arrastra hasta 5 fotos</span>
@@ -227,62 +233,61 @@
                     </form>
                 </div>
             </div>
-        </div>
 
-        <div id="favorites" class="tab-content">
-            <div class="recipes-grid">
-                <article class="recipe-card favorite">
-                    <div class="recipe-header">
-                        <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445" alt="Favorito">
-                        <div class="favorite-badge"><i class="fas fa-heart"></i></div>
-                        <div class="recipe-meta">
-                            <h3>Hamburguesa Gourmet</h3>
-                            <div class="recipe-stats">
-                                <span><i class="fas fa-user"></i> Chef María</span>
-                                <span><i class="fas fa-star"></i> 4.9</span>
+            <div id="favorites" class="tab-content">
+                <div class="recipes-grid">
+                    <article class="recipe-card favorite">
+                        <div class="recipe-header">
+                            <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445" alt="Favorito">
+                            <div class="favorite-badge"><i class="fas fa-heart"></i></div>
+                            <div class="recipe-meta">
+                                <h3>Hamburguesa Gourmet</h3>
+                                <div class="recipe-stats">
+                                    <span><i class="fas fa-user"></i> Chef María</span>
+                                    <span><i class="fas fa-star"></i> 4.9</span>
+                                </div>
                             </div>
                         </div>
+                    </article>
+                </div>
+            </div>
+
+            <div id="followers" class="tab-content">
+                <div class="followers-grid">
+                    <div class="follower-card">
+                        <img src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79" alt="Seguidor">
+                        <h4>Juan Pérez</h4>
+                        <p>Chef profesional</p>
+                        <button class="follow-btn">Seguir</button>
                     </div>
-                </article>
-            </div>
-        </div>
-
-        <div id="followers" class="tab-content">
-            <div class="followers-grid">
-                <div class="follower-card">
-                    <img src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79" alt="Seguidor">
-                    <h4>Juan Pérez</h4>
-                    <p>Chef profesional</p>
-                    <button class="follow-btn">Seguir</button>
-                </div>
-                <div class="follower-card">
-                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80" alt="Seguidora">
-                    <h4>Laura Gómez</h4>
-                    <p>Food blogger</p>
-                    <button class="follow-btn">Seguir</button>
+                    <div class="follower-card">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80" alt="Seguidora">
+                        <h4>Laura Gómez</h4>
+                        <p>Food blogger</p>
+                        <button class="follow-btn">Seguir</button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div id="following" class="tab-content">
-            <div class="followers-grid">
-                <div class="follower-card">
-                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956" alt="Seguido">
-                    <h4>Ana García</h4>
-                    <p>Especialista en postres</p>
-                    <button class="unfollow-btn">Dejar de seguir</button>
-                </div>
-                <div class="follower-card">
-                    <img src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c" alt="Seguido">
-                    <h4>Carlos Ruiz</h4>
-                    <p>Chef internacional</p>
-                    <button class="unfollow-btn">Dejar de seguir</button>
+            <div id="following" class="tab-content">
+                <div class="followers-grid">
+                    <div class="follower-card">
+                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956" alt="Seguido">
+                        <h4>Ana García</h4>
+                        <p>Especialista en postres</p>
+                        <button class="unfollow-btn">Dejar de seguir</button>
+                    </div>
+                    <div class="follower-card">
+                        <img src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c" alt="Seguido">
+                        <h4>Carlos Ruiz</h4>
+                        <p>Chef internacional</p>
+                        <button class="unfollow-btn">Dejar de seguir</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</main>
+    </main>
 
-<script src="${pageContext.request.contextPath}/js/scriptMyProfile.js"></script>
+    <script src="${pageContext.request.contextPath}/js/scriptRecetas.js"></script>
 </body>
 </html>
