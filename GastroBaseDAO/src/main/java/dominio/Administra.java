@@ -8,6 +8,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,44 +23,42 @@ import javax.persistence.Table;
  * @author carli
  */
 @Entity
-@Table(name = "tblComentario")
-public class Comentario implements Serializable {
+@Table(name="tblAdministra")
+public class Administra implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idComentario;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long idAdministra;
 
-    @Column(name = "contenido", nullable = false, length = 300)
-    private String contenido;
-
-    @Column(name = "fechaHora", nullable = false)
+    @Column(nullable = false)
     private LocalDateTime fechaHora;
 
-    @ManyToOne
-    @JoinColumn(name = "idReceta", nullable = false)
-    private Receta receta;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Tipo tipo;
+
+    public enum Tipo {
+        Desactivacion, Activacion, Destacar
+    }
 
     @ManyToOne
     @JoinColumn(name = "idChef", nullable = false)
     private Chef chef;
 
-    public Comentario() {
+    @ManyToOne
+    @JoinColumn(name = "idAdmin", nullable = false)
+    private Admin admin;
+
+    public Administra() {
     }
 
-    public Long getIdComentario() {
-        return idComentario;
+    public Long getIdAdministra() {
+        return idAdministra;
     }
 
-    public void setIdComentario(Long idComentario) {
-        this.idComentario = idComentario;
-    }
-
-    public String getContenido() {
-        return contenido;
-    }
-
-    public void setContenido(String contenido) {
-        this.contenido = contenido;
+    public void setIdAdministra(Long idAdministra) {
+        this.idAdministra = idAdministra;
     }
 
     public LocalDateTime getFechaHora() {
@@ -69,12 +69,12 @@ public class Comentario implements Serializable {
         this.fechaHora = fechaHora;
     }
 
-    public Receta getReceta() {
-        return receta;
+    public Tipo getTipo() {
+        return tipo;
     }
 
-    public void setReceta(Receta receta) {
-        this.receta = receta;
+    public void setTipo(Tipo tipo) {
+        this.tipo = tipo;
     }
 
     public Chef getChef() {
@@ -85,11 +85,18 @@ public class Comentario implements Serializable {
         this.chef = chef;
     }
 
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
+
     @PrePersist
     public void prePersist() {
         if (fechaHora == null) {
             fechaHora = LocalDateTime.now();
         }
     }
-
 }

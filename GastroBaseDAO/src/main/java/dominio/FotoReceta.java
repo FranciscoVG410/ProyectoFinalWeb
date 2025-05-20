@@ -1,40 +1,54 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package dominio;
 
-import javax.persistence.*;
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+/**
+ *
+ * @author carli
+ */
 @Entity
-@Table(name = "foto_receta")
-public class FotoReceta {
-
-    @Id
+@Table(name="tblFotoReceta")
+public class FotoReceta implements Serializable {
+   @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Lob
-    @Column(name = "imagen_base64", columnDefinition = "LONGTEXT")
-    private String imagenBase64;
+    private Long idFotoReceta;
+    
+   @Column(name="url", nullable = false)
+    private String url;
 
     @ManyToOne
-    @JoinColumn(name = "receta_id")
+    @JoinColumn(name = "idReceta", nullable = false)
     private Receta receta;
 
-    public FotoReceta() {}
-
-    public FotoReceta(String imagenBase64, Receta receta) {
-        this.imagenBase64 = imagenBase64;
-        this.receta = receta;
+    public FotoReceta() {
     }
 
-    public Long getId() {
-        return id;
+    public Long getIdFotoReceta() {
+        return idFotoReceta;
     }
 
-    public String getImagenBase64() {
-        return imagenBase64;
+    public void setIdFotoReceta(Long idFotoReceta) {
+        this.idFotoReceta = idFotoReceta;
     }
 
-    public void setImagenBase64(String imagenBase64) {
-        this.imagenBase64 = imagenBase64;
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public Receta getReceta() {
@@ -44,4 +58,6 @@ public class FotoReceta {
     public void setReceta(Receta receta) {
         this.receta = receta;
     }
+    
+    
 }

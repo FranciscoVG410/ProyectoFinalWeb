@@ -12,28 +12,32 @@ import javax.persistence.Persistence;
  *
  * @author OMEN
  */
-public class Conexion {
-    private static EntityManagerFactory emf;
+public class Conexion implements IConexionBD {
+   
+    private EntityManagerFactory entityManagerFactory;
 
-    static {
+    public Conexion() {
         try {
-            emf = Persistence.createEntityManagerFactory("GastroBase");
-            System.out.println("EntityManagerFactory creado exitosamente");
+            this.entityManagerFactory = Persistence.createEntityManagerFactory("ChazzBoutique");
         } catch (Exception e) {
-            System.err.println("Error al crear EntityManagerFactory");
+            System.err.println("Error al inicializar el EntityManagerFactory: " + e.getMessage());
             e.printStackTrace();
-            throw new RuntimeException("Error inicializando JPA", e);
         }
     }
 
-    public static EntityManager getEntityManager() {
-        return emf.createEntityManager();
+   
+    @Override
+    public EntityManager getEntityManager() {
+        if (entityManagerFactory == null) {
+            throw new IllegalStateException("EntityManagerFactory no esta inicializado.");
+        }
+        return entityManagerFactory.createEntityManager();
     }
 
-    public static void close() {
-        if (emf != null && emf.isOpen()) {
-            emf.close();
-            System.out.println("EntityManagerFactory cerrado");
+    @Override
+    public void closeEntityManagerFactory() {
+        if (entityManagerFactory != null && entityManagerFactory.isOpen()) {
+            entityManagerFactory.close();
         }
     }
 }
