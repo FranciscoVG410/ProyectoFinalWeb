@@ -213,14 +213,14 @@
                 </div>
 
                 <script>
-                                                    // Cierra automáticamente el modal después de 3 segundos
-                                                    setTimeout(() => {
-                                                        document.querySelector('.success-modal').classList.add('animate__fadeOutUp');
-                                                        document.querySelector('.modal-overlay').classList.remove('active');
-                                                        setTimeout(() => {
-                                                            document.querySelector('.success-modal').remove();
-                                                        }, 500);
-                                                    }, 3000);
+                    // Cierra automáticamente el modal después de 3 segundos
+                    setTimeout(() => {
+                        document.querySelector('.success-modal').classList.add('animate__fadeOutUp');
+                        document.querySelector('.modal-overlay').classList.remove('active');
+                        setTimeout(() => {
+                            document.querySelector('.success-modal').remove();
+                        }, 500);
+                    }, 3000);
                 </script>
                 <% }%>
 

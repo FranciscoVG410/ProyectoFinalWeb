@@ -1,0 +1,227 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 20 may 2025, 12:21:00 a.m.
+    Author     : OMEN
+*/
+
+:root {
+    --flame-orange: #FF6B35;
+    --spicy-green: #2ECC71;
+    --dark-wood: #2D1A12;
+    --chef-white: #FFF9F2;
+    --text-dark: #2C3E50;
+    --soft-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    --section-bg: #FFFFFF;
+    --warning-yellow: #F39C12;
+}
+
+body {
+    font-family: 'Raleway', sans-serif;
+    background: var(--chef-white);
+    color: var(--text-dark);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+.culinary-nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: white;
+    box-shadow: var(--soft-shadow);
+    z-index: 1000;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--dark-wood);
+    text-decoration: none;
+}
+
+.logo-icon {
+    font-size: 2rem;
+    color: var(--flame-orange);
+    margin-right: 0.5rem;
+}
+
+.error-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+    padding: 2rem;
+    padding-top: 80px;
+}
+
+.error-icon {
+    font-size: 6rem;
+    color: var(--warning-yellow);
+    margin-bottom: 2rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.error-title {
+    font-family: 'Playfair Display', serif;
+    color: var(--warning-yellow);
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.error-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    max-width: 600px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.6;
+}
+
+.search-box {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto 2rem;
+    position: relative;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    border: 2px solid #eee;
+    border-radius: 30px;
+    font-size: 1rem;
+    box-shadow: var(--soft-shadow);
+}
+
+.search-box button {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    background: var(--warning-yellow);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.search-box button:hover {
+    background: var(--flame-orange);
+}
+
+.error-btn {
+    background: linear-gradient(45deg, var(--warning-yellow), var(--flame-orange));
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.error-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(243, 156, 18, 0.3);
+}
+
+.error-btn i {
+    margin-right: 8px;
+}
+
+.suggestions {
+    margin-top: 2rem;
+    text-align: left;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.suggestions h3 {
+    color: var(--dark-wood);
+    margin-bottom: 1rem;
+}
+
+.suggestions ul {
+    list-style: none;
+    padding: 0;
+}
+
+.suggestions li {
+    margin-bottom: 0.5rem;
+}
+
+.suggestions a {
+    color: var(--flame-orange);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.suggestions a:hover {
+    color: var(--dark-wood);
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .error-container {
+        padding: 1.5rem;
+        padding-top: 70px;
+    }
+    
+    .error-title {
+        font-size: 2.2rem;
+    }
+    
+    .error-subtitle {
+        font-size: 1rem;
+    }
+    
+    .error-icon {
+        font-size: 4.5rem;
+    }
+    
+    .culinary-nav {
+        padding: 1rem;
+    }
+    
+    .nav-brand {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .error-title {
+        font-size: 1.8rem;
+    }
+    
+    .error-btn {
+        padding: 0.8rem 1.5rem;
+    }
+    
+    .search-box {
+        margin-bottom: 1.5rem;
+    }
+}
