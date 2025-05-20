@@ -6,6 +6,7 @@ dominio\Admin.class
 DAOs\UsuarioDAO.class
 main\GastroBaseDAO.class
 dominio\Comentario.class
+DAOs\ChefDAO.class
 dominio\Administra$Tipo.class
 dominio\Favorito.class
 dominio\FotoReceta.class
