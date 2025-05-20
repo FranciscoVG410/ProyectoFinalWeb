@@ -6,6 +6,9 @@ package proyefinalWEB.gastrobase.servlets;
 
 import DAOs.UsuarioDAO;
 import com.google.protobuf.TextFormat.ParseException;
+import conexion.Conexion;
+import conexion.IConexionBD;
+import dominio.Chef;
 import dominio.Usuario;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -31,7 +34,7 @@ public class SignUpServlet extends HttpServlet {
             throws ServletException, IOException {
         response.sendRedirect(request.getContextPath() + "/views/SignUp.jsp");
     }
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -55,29 +58,30 @@ public class SignUpServlet extends HttpServlet {
         }
 
         try {
-            UsuarioDAO usuarioDAO = new UsuarioDAO();
+            // Convertir String a LocalDate directamente
+            IConexionBD conexion = new Conexion();
+            UsuarioDAO usuarioDAO = new UsuarioDAO(conexion);
+            LocalDate fechaNacimiento = LocalDate.parse(fechaNacimientoStr);
 
-            // Verificar si el correo ya existe
-            if (usuarioDAO.buscarPorCorreo(correo) != null) {
-                errores.put("email", "Este correo ya está registrado");
+            // Validar edad (mayor de 18 años)
+            LocalDate hoyMenos18 = LocalDate.now().minusYears(18);
+            if (fechaNacimiento.isAfter(hoyMenos18)) {
+                errores.put("dob", "Debes ser mayor de 18 años");
                 request.setAttribute("errorMap", errores);
                 mantenerValores(request, correo, nombre, apellido, telefono, fechaNacimientoStr);
                 request.getRequestDispatcher("/views/SignUp.jsp").forward(request, response);
                 return;
             }
 
-            // Convertir String a Calendar
-            Calendar fechaNacimiento = convertirStringACalendar(fechaNacimientoStr);
-
             // Crear nuevo usuario
-            Usuario nuevoUsuario = new Usuario();
+            Chef nuevoUsuario = new Chef();
             nuevoUsuario.setCorreo(correo);
             nuevoUsuario.setNombre(nombre);
             nuevoUsuario.setApellido(apellido);
             nuevoUsuario.setContrasenia(contrasenia);
             nuevoUsuario.setTelefono(telefono);
             nuevoUsuario.setFechaNacimiento(fechaNacimiento);
-            nuevoUsuario.setRol(Usuario.Rol.NORMAL); // Rol por defecto
+            nuevoUsuario.setRol(Usuario.Rol.CHEF); // Rol por defecto
 
             // Registrar usuario
             usuarioDAO.crearUsuario(nuevoUsuario);
