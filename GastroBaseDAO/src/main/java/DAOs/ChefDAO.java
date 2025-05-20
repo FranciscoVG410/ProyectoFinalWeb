@@ -5,10 +5,13 @@
 package DAOs;
 
 import conexion.IConexionBD;
+import dominio.Chef;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 
 /**
  *
- * @author carli
+ * @author joseq
  */
 public class ChefDAO {
 
@@ -17,4 +20,50 @@ public class ChefDAO {
     public ChefDAO(IConexionBD conexion) {
         this.conexion = conexion;
     }
+
+    public void crear(Chef chef) {
+        EntityManager em = conexion.getEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        try {
+            tx.begin();
+            em.persist(chef);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+            throw e;
+        }
+    }
+
+    public Chef buscarPorId(Long id) {
+        return conexion.getEntityManager().find(Chef.class, id);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    }
+
 }
