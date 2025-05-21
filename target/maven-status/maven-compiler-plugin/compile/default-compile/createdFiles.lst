@@ -11,4 +11,5 @@ servlets\LoginServlet$1.class
 servlets\EliminarRecetaServlet.class
 servlets\LogoutServlet.class
 servlets\CrearRecetaServlet.class
+servlets\EliminarRecetaChefServlet.class
 servlets\DestacarChefServlet.class

@@ -28,4 +28,6 @@ public interface IChefDAO {
 
     public void actualizarDestacado(Long idChef, boolean destacar) throws PersistenciaException;
 
+    public List<Chef> obtenerChefsDestacados();
+
 }

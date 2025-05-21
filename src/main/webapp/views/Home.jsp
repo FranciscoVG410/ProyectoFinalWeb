@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!DOCTYPE html>
 <html>
@@ -185,22 +186,26 @@
                 <div class="featured-chefs">
                     <h4>Chefs Destacados <i class="fas fa-award"></i></h4>
                     <div class="chefs-grid">
-                        <div class="chef-card">
-                            <img src="https://images.unsplash.com/photo-1581299894007-aaa50297cf16" alt="Chef">
-                            <h5>Carlos Gutiérrez</h5>
-                            <p>25 recetas</p>
-                            <button class="follow-btn">Seguir</button>
-                        </div>
-                        <div class="chef-card">
-                            <div class="chef-avatar-placeholder">
-                                <i class="fas fa-user"></i>
+                        <c:forEach var="chef" items="${chefsDestacados}">
+                            <div class="chef-card">
+                                <c:choose>
+                                    <c:when test="${not empty chef.urlAvatar}">
+                                        <img src="${pageContext.request.contextPath}/${chef.urlAvatar}" alt="Chef">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="chef-avatar-placeholder">
+                                            <i class="fas fa-user"></i>
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
+                                <h5>${chef.nombre} ${chef.apellido}</h5>
+                                <p>${fn:length(chef.recetas)} recetas</p>
+                                <button class="follow-btn">Seguir</button>
                             </div>
-                            <h5>Sophie Martin</h5>
-                            <p>18 recetas</p>
-                            <button class="follow-btn">Seguir</button>
-                        </div>
+                        </c:forEach>
                     </div>
                 </div>
+
             </aside>
         </main>
 

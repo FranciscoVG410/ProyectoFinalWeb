@@ -231,7 +231,7 @@
                                         </button>
 
 
-                                        <form method="post" action="${pageContext.request.contextPath}/eliminarReceta"
+                                        <form method="post" action="${pageContext.request.contextPath}/eliminarRecetaChef"
                                               onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta receta?');"
                                               style="display: inline;">
                                             <input type="hidden" name="idReceta" value="${receta.idReceta}">

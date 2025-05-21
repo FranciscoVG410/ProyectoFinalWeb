@@ -141,5 +141,11 @@ public List<Chef> obtenerTodosLosChefs() {
     }
 }
 
+@Override
+public List<Chef> obtenerChefsDestacados() {
+    EntityManager em = conexion.getEntityManager();
+    TypedQuery<Chef> query = em.createQuery("SELECT c FROM Chef c WHERE c.destacado = true", Chef.class);
+    return query.getResultList();
+}
 
 }
