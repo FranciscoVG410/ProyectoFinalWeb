@@ -19,6 +19,7 @@ C:\Users\carli\OneDrive\Documentos\GitHub\ProyectoFinalWeb\GastroBaseDAO\src\mai
 C:\Users\carli\OneDrive\Documentos\GitHub\ProyectoFinalWeb\GastroBaseDAO\src\main\java\dominio\Receta.java
 C:\Users\carli\OneDrive\Documentos\GitHub\ProyectoFinalWeb\GastroBaseDAO\src\main\java\dominio\Usuario.java
 C:\Users\carli\OneDrive\Documentos\GitHub\ProyectoFinalWeb\GastroBaseDAO\src\main\java\exception\PersistenciaException.java
+C:\Users\carli\OneDrive\Documentos\GitHub\ProyectoFinalWeb\GastroBaseDAO\src\main\java\interfaces\IAdministraDAO.java
 C:\Users\carli\OneDrive\Documentos\GitHub\ProyectoFinalWeb\GastroBaseDAO\src\main\java\interfaces\IChefDAO.java
 C:\Users\carli\OneDrive\Documentos\GitHub\ProyectoFinalWeb\GastroBaseDAO\src\main\java\interfaces\IRecetaDAO.java
 C:\Users\carli\OneDrive\Documentos\GitHub\ProyectoFinalWeb\GastroBaseDAO\src\main\java\interfaces\IUsuarioDAO.java

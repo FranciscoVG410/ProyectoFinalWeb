@@ -119,6 +119,28 @@ function openTab(tabName, event) {
     document.getElementById(tabName).classList.add('active');
     event.currentTarget.classList.add('active');
 }
+function openEditRecipeModal(id, nombre, tiempo, personas, complejidad, ingredientes, instrucciones) {
+    document.getElementById("editRecipeModal").style.display = "flex";
 
+    document.querySelector("#editRecipeForm input[name='idReceta']").value = id;
+    document.querySelector("#editRecipeForm input[name='titulo']").value = nombre;
+    document.querySelector("#editRecipeForm input[name='tiempo']").value = tiempo;
+    document.querySelector("#editRecipeForm input[name='personas']").value = personas;
+    document.querySelector("#editRecipeForm select[name='complejidad']").value = complejidad;
+    document.querySelector("#editRecipeForm textarea[name='ingredientes']").value = ingredientes;
+    document.querySelector("#editRecipeForm textarea[name='instrucciones']").value = instrucciones;
+}
 
+function closeEditRecipeModal() {
+    document.getElementById("editRecipeModal").style.display = "none";
+}
 
+document.getElementById("searchInput").addEventListener("keyup", function () {
+    const searchValue = this.value.toLowerCase();
+    const recetas = document.querySelectorAll(".receta-item");
+
+    recetas.forEach(function (receta) {
+        const nombre = receta.querySelector(".receta-nombre").textContent.toLowerCase();
+        receta.style.display = nombre.includes(searchValue) ? "block" : "none";
+    });
+});

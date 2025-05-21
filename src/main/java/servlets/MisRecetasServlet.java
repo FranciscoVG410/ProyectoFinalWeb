@@ -26,7 +26,8 @@ import java.util.List;
  */
 @WebServlet(name = "misRecetasServlet", urlPatterns = {"/misRecetasServlet"})
 public class MisRecetasServlet extends HttpServlet {
- private IRecetaDAO recetaDAO;
+
+    private IRecetaDAO recetaDAO;
 
     @Override
     public void init() {
@@ -39,8 +40,14 @@ public class MisRecetasServlet extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-        Chef chef = (Chef) session.getAttribute("usuario"); // debe ser instancia de Chef
+        Object usuario = request.getSession().getAttribute("usuario");
 
+        if (!(usuario instanceof Chef)) {
+            response.sendRedirect("error/ServiceUnvaliable.jsp"); // o algún mensaje amigable
+            return;
+        }
+
+        Chef chef = (Chef) usuario;
         if (chef == null) {
             response.sendRedirect("views/login.jsp");
             return;

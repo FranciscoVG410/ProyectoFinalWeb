@@ -1,8 +1,14 @@
-servlets\LoginServlet$1.class
 servlets\SignUpServlet.class
 proyefinalWEB\gastrobase\resources\JakartaEE8Resource.class
+servlets\EditarRecetaServlet.class
 servlets\LoginServlet.class
-servlets\LogoutServlet.class
-servlets\CrearRecetaServlet.class
+servlets\EliminarChefServlet.class
+servlets\FeedRecetaServlet.class
+servlets\AdminPanelServlet.class
 proyefinalWEB\gastrobase\JakartaRestConfiguration.class
 servlets\MisRecetasServlet.class
+servlets\LoginServlet$1.class
+servlets\EliminarRecetaServlet.class
+servlets\LogoutServlet.class
+servlets\CrearRecetaServlet.class
+servlets\DestacarChefServlet.class

@@ -39,7 +39,7 @@ public class Administra implements Serializable {
     private Tipo tipo;
 
     public enum Tipo {
-        Desactivacion, Activacion, Destacar
+        Elimina, Destaca, No_Destacar
     }
 
     @ManyToOne

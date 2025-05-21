@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,13 +19,13 @@
     <body>
         <!-- Barra de navegación -->
         <nav class="culinary-nav">
-            <a href="${pageContext.request.contextPath}/views/Home.jsp" class="nav-brand">
+            <a href="${pageContext.request.contextPath}/feedRecetas" class="nav-brand">
                 <i class="fas fa-mortar-pestle logo-icon"></i>
                 <span>GastroBase</span>
             </a>
 
             <div class="nav-search">
-                <input type="text" placeholder="Buscar recetas, ingredientes...">
+                <input type="text" id="searchInput" placeholder="Buscar recetas, ingredientes...">
                 <button class="spice-button">
                     <i class="fas fa-search"></i>
                 </button>
@@ -116,71 +118,57 @@
             <section class="recipe-feed">
                 <h2 class="section-title">Recetas del Momento 🔥</h2>
 
-                <!-- Receta 1 - Pasta Carbonara -->
-                <article class="recipe-card">
-                    <div class="recipe-header">
-                        <img src="https://images.unsplash.com/photo-1588013273468-315fd88ea34c" alt="Pasta Carbonara">
-                        <div class="recipe-meta">
-                            <h3>Carbonara Auténtica</h3>
-                            <div class="author-info">
-                                <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36" alt="Chef">
-                                <span>Marco Bianchi</span>
-                            </div>
-                            <div class="recipe-stats">
-                                <span><i class="fas fa-clock"></i> 25 min</span>
-                                <span><i class="fas fa-utensils"></i> 2 personas</span>
-                                <span><i class="fas fa-chart-line"></i> Media</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="recipe-content">
-                        <p>La verdadera carbonara romana con guanciale crujiente y salsa cremosa de huevo.</p>
-                        <div class="recipe-actions">
-                            <button class="like-btn">
-                                <i class="fas fa-heart"></i> 328
-                            </button>
-                            <button class="comment-btn">
-                                <i class="fas fa-comment"></i> 45
-                            </button>
-                            <button class="save-btn">
-                                <i class="fas fa-bookmark"></i>
-                            </button>
-                        </div>
-                    </div>
-                </article>
+                <c:forEach var="receta" items="${todasLasRecetas}">
+                    <article class="recipe-card receta-item">
+                        <div class="recipe-header">
+                            <c:choose>
+                                <c:when test="${not empty receta.fotos}">
+                                    <img src="${pageContext.request.contextPath}/${receta.fotos[0].url}" alt="${receta.nombre}">
+                                </c:when>
+                                <c:otherwise>
+                                    <img src="${pageContext.request.contextPath}/img/default.jpg" alt="Sin imagen">
+                                </c:otherwise>
+                            </c:choose>
 
-                <!-- Receta 2 - Sushi -->
-                <article class="recipe-card">
-                    <div class="recipe-header">
-                        <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c" alt="Sushi">
-                        <div class="recipe-meta">
-                            <h3>Sushi Artesanal</h3>
-                            <div class="author-info">
-                                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2" alt="Chef">
-                                <span>Yuki Tanaka</span>
-                            </div>
-                            <div class="recipe-stats">
-                                <span><i class="fas fa-clock"></i> 1.5 hrs</span>
-                                <span><i class="fas fa-utensils"></i> 4 personas</span>
-                                <span><i class="fas fa-chart-line"></i> Alta</span>
+                            <div class="recipe-meta">
+                                <h3 class="receta-nombre">${receta.nombre}</h3>
+                                <div class="author-info">
+                                    <c:choose>
+                                        <c:when test="${not empty receta.chef}">
+                                            <img src="${pageContext.request.contextPath}/${receta.chef.urlAvatar}" alt="Chef">
+                                            <span>${receta.chef.nombre} ${receta.chef.apellido}</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <img src="${pageContext.request.contextPath}/img/default-chef.png" alt="Chef">
+                                            <span>Chef desconocido</span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                                <div class="recipe-stats">
+                                    <span><i class="fas fa-clock"></i> ${receta.tiempo} min</span>
+                                    <span><i class="fas fa-utensils"></i> ${receta.numPersonas} personas</span>
+                                    <span><i class="fas fa-chart-line"></i> ${receta.complejidad}</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="recipe-content">
-                        <p>Rollos de salmón fresco con arroz avinagrado y wasabi casero.</p>
-                        <div class="recipe-actions">
-                            <button class="like-btn">
-                                <i class="fas fa-heart"></i> 512
-                            </button>
-                            <button class="comment-btn">
-                                <i class="fas fa-comment"></i> 89
-                            </button>
-                            <button class="save-btn">
-                                <i class="fas fa-bookmark"></i>
-                            </button>
+
+                        <div class="recipe-content">
+                            <p>${receta.ingredientes}</p>
+                            <div class="recipe-actions">
+                                <button class="like-btn">
+                                    <i class="fas fa-heart"></i> 0
+                                </button>
+                                <button class="comment-btn">
+                                    <i class="fas fa-comment"></i>
+                                </button>
+                                <button class="save-btn">
+                                    <i class="fas fa-bookmark"></i>
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                </article>            
+                    </article>
+                </c:forEach>
+
             </section>
 
             <!-- Sidebar derecho -->

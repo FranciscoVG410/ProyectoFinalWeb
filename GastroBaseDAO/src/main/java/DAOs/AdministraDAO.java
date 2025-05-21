@@ -2,10 +2,12 @@ package DAOs;
 
 import conexion.IConexionBD;
 import dominio.Administra;
+import exception.PersistenciaException;
+import interfaces.IAdministraDAO;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-public class AdministraDAO {
+public class AdministraDAO implements IAdministraDAO {
 
     private IConexionBD conexion;
 
@@ -13,54 +15,23 @@ public class AdministraDAO {
         this.conexion = conexion;
     }
 
-    public void crear(Administra administra) {
+    public void guardar(Administra administra) throws PersistenciaException {
         EntityManager em = conexion.getEntityManager();
-        EntityTransaction tx = em.getTransaction();
         try {
-            tx.begin();
+            em.getTransaction().begin();
             em.persist(administra);
-            tx.commit();
+            em.getTransaction().commit();
+
         } catch (Exception e) {
-            if (tx.isActive()) tx.rollback();
-            throw e;
+            em.getTransaction().rollback();
+            throw new PersistenciaException("Error general al guardar Administra", e);
+        } finally {
+            em.close();
         }
     }
 
     public Administra buscarPorId(Long id) {
         return conexion.getEntityManager().find(Administra.class, id);
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
     }
 }

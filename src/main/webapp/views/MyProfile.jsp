@@ -5,6 +5,10 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,17 +22,12 @@
     <body>
         <!-- Barra de navegación -->
         <nav class="culinary-nav">
-            <a href="${pageContext.request.contextPath}/views/Home.jsp" class="nav-brand">
+            <a href="${pageContext.request.contextPath}/feedRecetas" class="nav-brand">
                 <i class="fas fa-mortar-pestle logo-icon"></i>
                 <span>GastroBase</span>
             </a>
 
-            <div class="nav-search">
-                <input type="text" placeholder="Buscar recetas, ingredientes...">
-                <button class="spice-button">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
+
 
             <div class="nav-actions">
                 <div class="user-profile" onclick="toggleProfileMenu()">
@@ -85,6 +84,73 @@
                 </div>
             </div>
 
+
+
+
+
+            <!-- Modal para editar receta -->
+            <div class="new-recipe-modal" id="editRecipeModal">
+                <div class="modal-content">
+                    <span class="close-modal" onclick="closeEditRecipeModal()">&times;</span>
+                    <h2><i class="fas fa-utensils"></i> Editar Receta</h2>
+
+                    <form class="recipe-form" id="editRecipeForm"
+                          action="${pageContext.request.contextPath}/editarReceta"
+                          method="POST">
+
+                        <!-- Campo oculto con el ID de la receta -->
+                        <input type="hidden" name="idReceta" value="${receta.idReceta}">
+
+                        <div class="form-group">
+                            <label>Título de la receta</label>
+                            <input type="text" name="titulo" value="${receta.nombre}" required>
+                        </div>
+
+                        <div class="specs-grid">
+                            <div class="form-group">
+                                <label><i class="fas fa-clock"></i> Tiempo (min)</label>
+                                <input type="number" name="tiempo" min="1" value="${receta.tiempo}" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label><i class="fas fa-users"></i> Personas</label>
+                                <input type="number" name="personas" min="1" value="${receta.numPersonas}" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label><i class="fas fa-signal"></i> Complejidad</label>
+                                <select name="complejidad" required>
+                                    <option value="">Seleccionar...</option>
+                                    <option ${receta.complejidad == 'Fácil' ? 'selected' : ''}>Fácil</option>
+                                    <option ${receta.complejidad == 'Media' ? 'selected' : ''}>Media</option>
+                                    <option ${receta.complejidad == 'Difícil' ? 'selected' : ''}>Difícil</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-carrot"></i> Ingredientes</label>
+                            <textarea name="ingredientes" rows="4" required>${receta.ingredientes}</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-list-ol"></i> Instrucciones</label>
+                            <textarea name="instrucciones" rows="6" required>${receta.instrucciones}</textarea>
+                        </div>
+
+
+                        <div class="form-actions">
+                            <button type="button" class="cancel-btn" onclick="closeEditRecipeModal()">Cancelar</button>
+                            <button type="submit" class="publish-btn">
+                                <i class="fas fa-save"></i> Guardar Cambios
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+
             <!-- Sección de contenido -->
             <div class="profile-content">
                 <!-- Información personal -->
@@ -126,10 +192,6 @@
                     </button>
                 </div>
 
-
-
-                <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
                 <!-- Contenido de tabs -->
                 <div id="my-recipes" class="tab-content active">
                     <div class="recipes-header">
@@ -155,8 +217,28 @@
                                         </div>
                                     </div>
                                     <div class="recipe-actions">
-                                        <button class="edit-btn"><i class="fas fa-edit"></i> Editar</button>
-                                        <button class="delete-btn"><i class="fas fa-trash"></i> Eliminar</button>
+                                        <button class="edit-btn"
+                                                onclick='openEditRecipeModal(
+                                                ${receta.idReceta},
+                                                                "${fn:escapeXml(receta.nombre)}",
+                                                ${receta.tiempo},
+                                                ${receta.numPersonas},
+                                                                "${receta.complejidad}",
+                                                                "${fn:escapeXml(receta.ingredientes)}",
+                                                                "${fn:escapeXml(receta.proceso)}"
+                                                                )'>
+                                            <i class="fas fa-edit"></i> Editar
+                                        </button>
+
+
+                                        <form method="post" action="${pageContext.request.contextPath}/eliminarReceta"
+                                              onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta receta?');"
+                                              style="display: inline;">
+                                            <input type="hidden" name="idReceta" value="${receta.idReceta}">
+                                            <button type="submit" class="delete-btn">
+                                                <i class="fas fa-trash"></i> Eliminar
+                                            </button>
+                                        </form>
                                     </div>
                                 </article>
                             </c:forEach>

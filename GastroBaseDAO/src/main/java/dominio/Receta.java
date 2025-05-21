@@ -151,4 +151,6 @@ public class Receta implements Serializable {
         fotos.remove(foto);
         foto.setReceta(null);
     }
+    
+    
 }

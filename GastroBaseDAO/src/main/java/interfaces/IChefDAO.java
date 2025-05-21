@@ -6,6 +6,7 @@ package interfaces;
 
 import dominio.Chef;
 import exception.PersistenciaException;
+import java.util.List;
 
 /**
  *
@@ -19,6 +20,12 @@ public interface IChefDAO {
 
     public Chef buscarPorCorreo(String correo) throws PersistenciaException;
 
-    public Chef buscarPorTelefono(String telefono) throws PersistenciaException ;
+    public Chef buscarPorTelefono(String telefono) throws PersistenciaException;
+
+    public List<Chef> obtenerTodosLosChefs();
+
+    public void eliminarPorId(Long idChef) throws PersistenciaException;
+
+    public void actualizarDestacado(Long idChef, boolean destacar) throws PersistenciaException;
 
 }

@@ -21,4 +21,9 @@ public interface IRecetaDAO {
 
     public List<Receta> obtenerRecetasPorChef(Chef chef) throws PersistenciaException;
 
+    public void eliminarReceta(Long id) throws PersistenciaException;
+
+    public void editarReceta(Receta recetaEditada) throws PersistenciaException;
+    
+    public List<Receta> obtenerTodasLasRecetas();
 }

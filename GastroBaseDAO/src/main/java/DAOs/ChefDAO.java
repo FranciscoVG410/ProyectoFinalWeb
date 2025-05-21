@@ -8,6 +8,8 @@ import conexion.IConexionBD;
 import dominio.Chef;
 import exception.PersistenciaException;
 import interfaces.IChefDAO;
+import java.util.Collections;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
@@ -85,6 +87,55 @@ public class ChefDAO implements IChefDAO {
         return null;
     } catch (Exception e) {
         throw new PersistenciaException("Error al buscar por teléfono", e);
+    } finally {
+        em.close();
+    }
+}
+@Override
+public List<Chef> obtenerTodosLosChefs() {
+    EntityManager em = conexion.getEntityManager();
+    try {
+        return em.createQuery(
+                "SELECT DISTINCT c FROM Chef c LEFT JOIN FETCH c.recetas", Chef.class)
+                .getResultList();
+    } catch (Exception e) {
+        e.printStackTrace();
+        return Collections.emptyList();
+    } finally {
+        em.close();
+    }
+}
+
+    @Override
+    public void eliminarPorId(Long idChef) throws PersistenciaException {
+    EntityManager em = conexion.getEntityManager();
+    try {
+        em.getTransaction().begin();
+        Chef chef = em.find(Chef.class, idChef);
+        if (chef != null) {
+            em.remove(chef);
+        }
+        em.getTransaction().commit();
+    } catch (Exception e) {
+        em.getTransaction().rollback();
+        throw new PersistenciaException("Error al eliminar el chef con ID: " + idChef, e);
+    } finally {
+        em.close();
+    }
+}
+    @Override
+    public void actualizarDestacado(Long idChef, boolean destacar) throws PersistenciaException {
+    EntityManager em = conexion.getEntityManager();
+    try {
+        em.getTransaction().begin();
+        Chef chef = em.find(Chef.class, idChef);
+        if (chef != null) {
+            chef.setDestacado(destacar);
+        }
+        em.getTransaction().commit();
+    } catch (Exception e) {
+        em.getTransaction().rollback();
+        throw new PersistenciaException("Error al actualizar el estado destacado del chef con ID: " + idChef, e);
     } finally {
         em.close();
     }

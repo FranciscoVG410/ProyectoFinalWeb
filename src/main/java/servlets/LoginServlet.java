@@ -38,6 +38,10 @@ public class LoginServlet extends HttpServlet {
         if (usuario != null && usuario.getContrasenia().equals(contrasenia)) {
             HttpSession session = request.getSession();
             session.setAttribute("usuario", usuario);
+
+            if (usuario.getRol() == Rol.ADMIN) {
+                session.setAttribute("admin", usuario);
+            }
             if (usuario.getRol() == Rol.CHEF) {
                 Chef chef = (Chef) usuario; // Realiza el casting
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -48,10 +52,10 @@ public class LoginServlet extends HttpServlet {
             // Redirigir según el rol
             switch (usuario.getRol()) {
                 case ADMIN:
-                    response.sendRedirect(request.getContextPath() + "/views/AdminPanel.jsp");
+                    response.sendRedirect(request.getContextPath() + "/adminPanel");
                     break;
                 case CHEF:
-                    response.sendRedirect(request.getContextPath() + "/views/Home.jsp");
+                    response.sendRedirect(request.getContextPath() + "/feedRecetas");
                     break;
                 default:
                     response.sendRedirect(request.getContextPath() + "/login.jsp?error=rolDesconocido");

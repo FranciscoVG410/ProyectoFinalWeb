@@ -41,14 +41,18 @@ public class Chef extends Usuario implements Serializable {
 
     @Column(name = "fechaNacimiento")
     private LocalDate fechaNacimiento;
+    
+    @Column(name = "destacado")
+    private boolean destacado = false;
 
     @OneToMany(mappedBy = "chef", cascade = CascadeType.PERSIST)
     private List<Comentario> comentarios = new ArrayList<>();
     ;
 
-    @OneToMany(mappedBy = "chef", cascade = CascadeType.PERSIST)
-    private List<Receta> recetas = new ArrayList<>();
-    ;
+   @OneToMany(mappedBy = "chef", cascade = CascadeType.ALL, orphanRemoval = true)
+private List<Receta> recetas = new ArrayList<>();
+
+
     
     @OneToMany(mappedBy = "chef", cascade = CascadeType.PERSIST)
     private List<Favorito> favoritos = new ArrayList<>();
@@ -162,4 +166,16 @@ public class Chef extends Usuario implements Serializable {
         this.recetas = recetas;
     }
 
+
+    public boolean isDestacado() {
+        return destacado;
+    }
+
+    public void setDestacado(boolean destacado) {
+        this.destacado = destacado;
+    }
+
+    public Long getIdChef() {
+    return super.getIdUsuario();
+}
 }

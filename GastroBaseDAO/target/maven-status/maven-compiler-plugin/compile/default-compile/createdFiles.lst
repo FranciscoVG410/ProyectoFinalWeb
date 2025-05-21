@@ -1,3 +1,4 @@
+interfaces\IAdministraDAO.class
 interfaces\IChefDAO.class
 dominio\Admin.class
 DAOs\UsuarioDAO.class
